@@ -24,16 +24,13 @@ const {
 } = env;
 
 // constants
-let phpCsXmlRule = '';
+let phpCsXmlRule = {};
 const sources = {
   // note: paths are relative to gulpfile, not this file
   js: [
-    './composer.json',
     './gulpfile.babel.js',
     './gulpfile-loader.js',
     './gulp-modules/*.js',
-    './package.json',
-    './README.md',
     './cypress/**/*.js',
     './js/frontend.js',
     './js/backend.js',
@@ -46,18 +43,19 @@ const sources = {
     '!./vendor/**/*.php',
     '!./wp-content/**/*.php'
   ],
-  phpCsXml: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}phpcs.xml`,
   scss: './scss/*.scss'
 };
 
 if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH ) {
   sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/frontend.js` );
   sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/backend.js` );
+  sources.phpCsXml = `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}phpcs.xml`;
 }
 
 if ( WORDPRESS_PARENT_THEME_PATH ) {
   sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js` );
   sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js` );
+  sources.phpCsXml = `./${WORDPRESS_PARENT_THEME_PATH}phpcs.xml`;
 }
 
 
@@ -154,6 +152,9 @@ function js() {
  *
  * Lint PHP files.
  *
+ * Parameters:
+ *   cb - Callback, for flow control
+ *
  * See:
  * - <PHP_CodeSniffer: https://packagist.org/packages/squizlabs/php_codesniffer>
  * - <WordPress Coding Standards for PHP_CodeSniffer: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards>
@@ -163,13 +164,19 @@ function js() {
  * Returns:
  *   A stream - to signal task completion
  */
-function php() {
+function php( cb ) {
   taskHeader(
     '5/5',
     'QA',
     'Lint',
     'PHP'
   );
+
+  if ( !Object.keys( phpCsXmlRule ).length ) {
+    console.warn( 'phpCsXmlRule is empty.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
 
   const { ref, exclusions, error } = phpCsXmlRule;
 
@@ -200,13 +207,16 @@ function php() {
  *
  * Load config from phpcs.xml.
  *
+ * Parameters:
+ *   cb - Callback, for flow control
+ *
  * See:
  * - <https://github.com/nashwaan/xml-js#convert-xml--js-object--json>
  *
  * Returns:
  *   A stream - to signal task completion
  */
-function phpCsExclusions() {
+function phpCsExclusions( cb ) {
   taskHeader(
     '4/5',
     'QA',
@@ -216,8 +226,21 @@ function phpCsExclusions() {
 
   let errorMessage = false;
 
+  // if sources.phpXml
+  if ( !Object.prototype.hasOwnProperty.call( sources, 'phpXml' ) ) {
+    console.warn( 'phpXml config not detected.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
+
+  if ( !Object.keys( phpCsXmlRule ).length ) {
+    console.warn( 'phpCsXmlRule is empty.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
+
   // load phpcs.xml
-  return src( sources.phpCsXml )
+  return src( sources.phpCsXml, { allowEmpty: true } )
     // convert the XML to JSON
     .pipe( xmltojson( {
       compact: true,
