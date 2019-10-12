@@ -20,7 +20,7 @@ const unzip = require( 'gulp-unzip' );
 const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
-const env = require( 'env' );
+const env = require( './env' );
 const { GH_TOKEN, TRAVIS, TAGGED_RELEASE } = env;
 
 // constants
