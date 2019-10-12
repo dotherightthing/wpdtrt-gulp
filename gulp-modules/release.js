@@ -16,7 +16,12 @@ const zip = require( 'gulp-zip' );
 const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
-const { PACKAGE_NAME, WORDPRESS_PARENT_THEME, WORDPRESS_PLUGIN } = env;
+const {
+  PACKAGE_NAME,
+  RELEASE_TAG,
+  WORDPRESS_PARENT_THEME,
+  WORDPRESS_PLUGIN
+} = env;
 
 // constants
 const sources = {
@@ -349,20 +354,8 @@ function zipFiles() {
     'Zip file'
   );
 
-  let ciPackageReleaseTag = '';
-
-  if ( typeof process.env.TRAVIS !== 'undefined' ) {
-    if ( process.env.TRAVIS_TAG !== '' ) {
-      ciPackageReleaseTag = `-${process.env.TRAVIS_TAG}`;
-    }
-  } else if ( typeof process.env.BITBUCKET_TAG !== 'undefined' ) {
-    ciPackageReleaseTag = `-${process.env.BITBUCKET_TAG}`;
-  }
-
-  let ciPackageReleaseName = `release${ciPackageReleaseTag}.zip`;
-
   return src( [ `./${targets.zipSource}/**/*` ], { base: '.' } )
-    .pipe( zip( ciPackageReleaseName ) )
+    .pipe( zip( `release${RELEASE_TAG}.zip` ) )
     .pipe( dest( './' ) );
 }
 

@@ -49,7 +49,19 @@ const PACKAGE_NAME = () => packageJson.name;
  * See:
  * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
  */
-const RELEASE_TAG = process.env.TRAVIS_TAG || '';
+const RELEASE_TAG = () => {
+  let releaseTag = '';
+
+  if ( typeof process.env.TRAVIS !== 'undefined' ) {
+    if ( process.env.TRAVIS_TAG !== '' ) {
+      releaseTag = `-${process.env.TRAVIS_TAG}`;
+    }
+  } else if ( typeof process.env.BITBUCKET_TAG !== 'undefined' ) {
+    releaseTag = `-${process.env.BITBUCKET_TAG}`;
+  }
+
+  return releaseTag;
+};
 
 /**
  * Constant: TAGGED_RELEASE
