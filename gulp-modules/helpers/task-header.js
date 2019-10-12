@@ -1,8 +1,10 @@
 /**
- * File: gulp-modules/helpers/task-header.js
+ * File: gulp-modules/task-header.js
  *
  * Helper functions to visually organise build logs.
  */
+
+const log = require( 'fancy-log' );
 
 /**
  * Group: Helpers
@@ -26,14 +28,12 @@ function taskHeader(
   taskAction = '',
   taskDetail = ''
 ) {
-  let str = '';
-  str += '\n';
-  str += '========================================\n';
-  str += `${taskCategory} step ${step}:\n`;
-  str += `=> ${taskAction}: ${taskDetail}\n`;
-  str += '----------------------------------------\n';
-
-  return str;
+  log( ' ' );
+  log( '========================================' );
+  log( `${taskCategory} step ${step}:` );
+  log( `=> ${taskAction}: ${taskDetail}` );
+  log( '----------------------------------------' );
+  log( ' ' );
 }
 
 module.exports = taskHeader;

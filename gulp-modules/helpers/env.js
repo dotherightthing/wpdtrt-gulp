@@ -1,5 +1,5 @@
 /**
- * File: gulp-modules/helpers/env.js
+ * File: gulp-modules/env.js
  *
  * Environment Variables.
  *
@@ -13,26 +13,37 @@
  */
 
 /**
- * Constant: CYPRESS_RECORD_KEY
+ * Constant: GH_TOKEN
  *
- * Key for recording headless CI tests.
- *
- * Note:
- * - This is in addition to the projectId in cypress.json.
+ * Github API token (string).
  */
-const CYPRESS_RECORD_KEY = process.env.CYPRESS_RECORD_KEY || '';
+const GH_TOKEN = process.env.GH_TOKEN || '';
 
 /**
- * Constant: CI
+ * Constant: TRAVIS
  *
- * CI CI flag (boolean).
+ * Travis CI flag (boolean).
  *
  * See:
- * - <Variables in pipelines: https://confluence.atlassian.com/bitbucket/environment-variables-794502608.html>
+ * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
  */
-const CI = ( typeof process.env.CI !== 'undefined' );
+const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
+
+/**
+ * Constant: TAGGED_RELEASE
+ *
+ * Checks whether we are deploying a release from the master branch.
+ *
+ * Note:
+ * - if the current build is for a git tag, this variable is set to the tag’s name.
+ *
+ * See:
+ * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
+ */
+const TAGGED_RELEASE = process.env.TRAVIS_TAG || false;
 
 module.exports = {
-  CYPRESS_RECORD_KEY,
-  CI
+  GH_TOKEN,
+  TRAVIS,
+  TAGGED_RELEASE
 };

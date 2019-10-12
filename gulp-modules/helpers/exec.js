@@ -1,5 +1,5 @@
 /**
- * File: gulp-modules/helpers/exec.js
+ * File: exec.js
  *
  * Promisify the node exec function, to be notified when command line calls have completed.
  *

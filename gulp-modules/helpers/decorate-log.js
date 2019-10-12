@@ -1,8 +1,12 @@
 /**
- * File: gulp-modules/helpers/decorate-log.js
+ * File: gulp-modules/decorate-log.js
  *
  * Functions relating to styling logged messages.
  */
+
+// Ignore missing declaration files
+// @ts-ignore
+const color = require( 'gulp-color' );
 
 /**
  * Group: Helpers
@@ -15,30 +19,19 @@
  * Log a Gulp task result with emoji and colour.
  *
  * Parameters:
- *   (function) color - gulp-color
- *   (function) log - gulp-log
  *   (object) filePath, messageCount, warningCount, errorCount
- *
- * Returns:
- *   (string) - decorated string
  */
-function decorateLog( color, log, {
+function decorateLog( {
   textstring = '',
   messageCount = 0,
   warningCount = 0,
   errorCount = 0
 } = {} ) {
   const colors = {
-    pass: 'GREEN',
-    message: 'WHITE',
-    warning: 'YELLOW',
-    error: 'RED'
+    pass: 'GREEN', message: 'WHITE', warning: 'YELLOW', error: 'RED'
   };
   const emojis = {
-    pass: '✔',
-    message: '💬',
-    warning: '⚠️',
-    error: '✖'
+    pass: '✔', message: '✖', warning: '✖', error: '✖'
   };
   let state;
 
@@ -52,11 +45,7 @@ function decorateLog( color, log, {
     state = 'pass';
   }
 
-  const iconStr = `${emojis[ state ]} ${textstring}`;
-
-  return (
-    color( iconStr, `${colors[ state ]}` )
-  );
+  console.log( color( `${emojis[ state ]} ${textstring}`, `${colors[ state ]}` ) );
 }
 
 module.exports = decorateLog;
