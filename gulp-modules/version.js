@@ -8,11 +8,13 @@ const { series } = gulp;
 const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
-const { TRAVIS } = env;
+const {
+  TRAVIS,
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 /**
  * Group: Tasks
@@ -63,7 +65,7 @@ function replaceVersions( done ) {
 
   wpdtrtPluginBump( {
     inputPathRoot: './',
-    inputPathBoilerplate: `./${boilerplatePath()}`
+    inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
   } );
 
   done();
@@ -91,7 +93,7 @@ async function updateDependencies() {
     'Update Composer dependencies'
   );
 
-  if ( boilerplatePath().length ) {
+  if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
     const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
     console.log( stdout );
     console.error( stderr );

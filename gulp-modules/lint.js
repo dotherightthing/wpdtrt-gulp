@@ -14,12 +14,14 @@ const sassLint = require( 'gulp-sass-lint' );
 const tap = require( 'gulp-tap' );
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const decorateLog = require( './decorate-log' );
 const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
-const { WORDPRESS_PARENT_THEME_PATH } = env;
+const {
+  WORDPRESS_PARENT_THEME_PATH,
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 // constants
 let phpCsXmlRule = '';
@@ -35,11 +37,7 @@ const sources = {
     './cypress/**/*.js',
     './js/frontend.js',
     './js/backend.js',
-    './js/twentysixteen.js', // wpdtrt
-    `./${boilerplatePath()}js/frontend.js`,
-    `./${boilerplatePath()}js/backend.js`,
-    `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js`,
-    `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js`
+    './js/twentysixteen.js' // wpdtrt
   ],
   php: [
     './**/*.php',
@@ -48,9 +46,20 @@ const sources = {
     '!./vendor/**/*.php',
     '!./wp-content/**/*.php'
   ],
-  phpCsXml: `./${boilerplatePath()}phpcs.xml`,
+  phpCsXml: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}phpcs.xml`,
   scss: './scss/*.scss'
 };
+
+if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH ) {
+  sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/frontend.js` );
+  sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/backend.js` );
+}
+
+if ( WORDPRESS_PARENT_THEME_PATH ) {
+  sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js` );
+  sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js` );
+}
+
 
 /**
  * Group: Tasks

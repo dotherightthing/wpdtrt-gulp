@@ -7,9 +7,12 @@ const gulp = require( 'gulp' );
 const { series } = gulp;
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
+const env = require( './env' );
 const execa = require( 'execa' );
 const taskHeader = require( './task-header' );
+const {
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 /**
  * Group: Tasks
@@ -38,9 +41,9 @@ async function cypressIo() {
 
   // only child plugins have tests
   // child plugins run off the boilerplatePath
-  if ( boilerplatePath().length ) {
+  if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
     try {
-      const { stdout, stderr } = await execa.commandSync( `./${boilerplatePath()}node_modules/.bin/cypress run` );
+      const { stdout, stderr } = await execa.commandSync( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}node_modules/.bin/cypress run` );
       console.log( stdout );
       console.log( stderr );
     } catch ( error ) {

@@ -13,15 +13,15 @@ const unzip = require( 'gulp-unzip' );
 const { dest, series } = gulp;
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
 const {
   CI,
   GH_TOKEN,
+  TAGGED_RELEASE,
   TRAVIS,
-  TAGGED_RELEASE
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
 } = env;
 
 // constants
@@ -153,8 +153,8 @@ async function wpUnit() {
   const wpVersion = 'latest';
   let installerPath = 'bin/';
 
-  if ( boilerplatePath().length ) {
-    installerPath = `${boilerplatePath()}bin/`;
+  if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
+    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}bin/`;
   }
 
   const shellScript = `${installerPath}install-wp-tests.sh`;

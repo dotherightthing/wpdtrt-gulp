@@ -9,7 +9,9 @@ const exec = require( './exec' );
 // internal modules
 const taskHeader = require( './task-header' );
 const env = require( './env' );
-const { TAGGED_RELEASE } = env;
+const {
+  TAGGED_RELEASE
+} = env;
 
 /**
  * Group: Tasks
