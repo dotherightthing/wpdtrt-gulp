@@ -5,7 +5,8 @@
  */
 const gulp = require( 'gulp' );
 const { series, src } = gulp;
-const xmltojson = require( 'gulp-xmltojson' );
+const gulpXmltojson = require( 'gulp-xmltojson' );
+const { xmltojson } = gulpXmltojson;
 
 // Ignore missing declaration files
 // @ts-ignore
