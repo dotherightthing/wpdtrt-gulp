@@ -9,7 +9,7 @@
 const gulp = require( 'gulp' );
 const { dest, series, src } = gulp;
 const del = require( 'del' );
-const print = require( 'gulp-print' );
+const print = require( 'gulp-print' ).default;
 const zip = require( 'gulp-zip' );
 
 // internal modules
