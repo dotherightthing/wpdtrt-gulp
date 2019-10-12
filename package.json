@@ -29,6 +29,7 @@
     "babel-eslint": "^10.0.3",
     "core-js": "^3.2.1",
     "cypress": "^3.4.1",
+    "cypress-plugin-retries": "^1.3.0",
     "del": "^5.1.0",
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -85,4 +86,3 @@
   "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-gulp",
   "author": "Dan Smith <dev@dotherightthing.co.nz>"
 }
-  
