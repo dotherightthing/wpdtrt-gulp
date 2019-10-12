@@ -69,13 +69,13 @@ async function wpUnit() {
     'WPUnit'
   );
 
-  const { error, stdout, stderr } = await exec( './vendor/bin/phpunit --configuration phpunit.xml.dist' );
-  if ( error ) {
-    console.error( error );
-    return;
+  try {
+    const { stdout, stderr } = await execa.commandSync( './vendor/bin/phpunit --configuration phpunit.xml.dist' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch ( error ) {
+    console.log( error.stdout );
   }
-  console.log( stdout );
-  console.error( stderr );
 }
 
 module.exports = series(
