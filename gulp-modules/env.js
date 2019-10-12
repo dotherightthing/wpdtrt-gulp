@@ -42,7 +42,7 @@ const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
  */
 const TAGGED_RELEASE = process.env.TRAVIS_TAG || false;
 
-export {
+module.exports = {
   GH_TOKEN,
   TRAVIS,
   TAGGED_RELEASE

@@ -3,15 +3,16 @@
  *
  * Gulp tasks to version files prior to a release.
  */
-
-import { series } from 'gulp';
-import wpdtrtPluginBump from 'gulp-wpdtrt-plugin-bump';
+const gulp = require( 'gulp' );
+const { series } = gulp;
+const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import exec from './exec';
-import taskHeader from './task-header';
-import { TRAVIS } from './env';
+const boilerplatePath = require( './boilerplate-path' );
+const exec = require( './exec' );
+const taskHeader = require( './task-header' );
+const env = require( './env' );
+const { TRAVIS } = env;
 
 /**
  * Group: Tasks
@@ -111,4 +112,4 @@ const versionTravis = series(
   replaceVersions
 );
 
-export default ( TRAVIS ? versionTravis : versionDev );
+module.exports = ( TRAVIS ? versionTravis : versionDev );

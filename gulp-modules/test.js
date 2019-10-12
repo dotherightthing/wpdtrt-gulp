@@ -3,14 +3,14 @@
  *
  * Gulp tasks to run unit tests.
  */
-
-import { series } from 'gulp';
+const gulp = require( 'gulp' );
+const { series } = gulp;
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import exec from './exec';
+const boilerplatePath = require( './boilerplate-path' );
+const exec = require( './exec' );
 const execa = require( 'execa' );
-import taskHeader from './task-header';
+const taskHeader = require( './task-header' );
 
 /**
  * Group: Tasks
@@ -78,7 +78,7 @@ async function wpUnit() {
   console.error( stderr );
 }
 
-export default series(
+module.exports = series(
   // 1/2
   cypressIo,
   // 2/2

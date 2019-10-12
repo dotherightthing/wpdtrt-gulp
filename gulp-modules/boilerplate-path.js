@@ -62,4 +62,4 @@ function boilerplatePath() {
   return path;
 }
 
-export default boilerplatePath;
+module.exports = boilerplatePath;

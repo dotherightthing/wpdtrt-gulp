@@ -3,13 +3,13 @@
  *
  * Gulp tasks to watch files for changes.
  */
-
-import { series, watch } from 'gulp';
+const gulp = require( 'gulp' );
+const { series, watch } = gulp;
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import compile from './compile';
-import taskHeader from './task-header';
+const boilerplatePath = require( './boilerplate-path' );
+const compile = require( './compile' );
+const taskHeader = require( './task-header' );
 
 // constants
 const sources = {
@@ -48,4 +48,4 @@ function devWatch() {
   watch( sources.js, series( compile ) );
 }
 
-export default series( devWatch );
+module.exports = series( devWatch );

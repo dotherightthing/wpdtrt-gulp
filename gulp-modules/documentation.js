@@ -4,11 +4,12 @@
  * Gulp tasks to generate documentation.
  */
 
-import exec from './exec';
+const exec = require( './exec' );
 
 // internal modules
-import taskHeader from './task-header';
-import { TAGGED_RELEASE } from './env';
+const taskHeader = require( './task-header' );
+const env = require( './env' );
+const { TAGGED_RELEASE } = env;
 
 /**
  * Group: Tasks
@@ -41,4 +42,4 @@ async function naturalDocs() {
   }
 }
 
-export default naturalDocs;
+module.exports = naturalDocs;

@@ -6,15 +6,15 @@
  * See:
  * - <Globtester: http://www.globtester.com/>
  */
-
-import { dest, series, src } from 'gulp';
-import del from 'del';
-import print from 'gulp-print';
-import zip from 'gulp-zip';
+const gulp = require( 'gulp' );
+const { dest, series, src } = gulp;
+const del = require( 'del' );
+const print = require( 'gulp-print' );
+const zip = require( 'gulp-zip' );
 
 // internal modules
-import exec from './exec';
-import taskHeader from './task-header';
+const exec = require( './exec' );
+const taskHeader = require( './task-header' );
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -219,7 +219,7 @@ function zipFiles() {
     .pipe( dest( './' ) );
 }
 
-export default series(
+module.exports = series(
   // 1/5
   composer,
   // 2/5

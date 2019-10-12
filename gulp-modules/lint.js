@@ -3,25 +3,25 @@
  *
  * Gulp tasks to lint code.
  */
-
-import { series, src } from 'gulp';
-import { xmltojson } from 'gulp-xmltojson';
+const gulp = require( 'gulp' );
+const { series, src } = gulp;
+const xmltojson = require 'gulp-xmltojson' );
 
 // Ignore missing declaration files
 // @ts-ignore
-import eslint from 'gulp-eslint';
+const eslint = require( 'gulp-eslint' );
 // @ts-ignore
-import phpcs from 'gulp-phpcs';
+const phpcs = require( 'gulp-phpcs' );
 // @ts-ignore
-import sassLint from 'gulp-sass-lint';
+const sassLint = require( 'gulp-sass-lint' );
 // @ts-ignore
-import tap from 'gulp-tap';
+const tap = require( 'gulp-tap' );
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import decorateLog from './decorate-log';
-import exec from './exec';
-import taskHeader from './task-header';
+const boilerplatePath = require( './boilerplate-path' );
+const decorateLog = require( './decorate-log' );
+const exec = require( './exec' );
+const taskHeader = require( './task-header' );
 
 // constants
 let phpCsXmlRule = '';
@@ -262,7 +262,7 @@ function phpCsExclusions() {
     } ) );
 }
 
-export default series(
+module.exports = series(
   // 1/5
   css,
   // 2/5
