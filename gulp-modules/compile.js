@@ -3,18 +3,18 @@
  *
  * Gulp tasks to compile code.
  */
-
-import { dest, series, src } from 'gulp';
-import autoprefixer from 'autoprefixer';
-import babel from 'gulp-babel';
-import postcss from 'gulp-postcss';
-import pxtorem from 'postcss-pxtorem';
-import rename from 'gulp-rename';
-import sass from 'gulp-sass';
+const gulp = require( 'gulp' );
+const { dest, series, src } = gulp;
+const autoprefixer = require( 'autoprefixer' );
+const babel = require( 'gulp-babel' );
+const postcss = require( 'gulp-postcss' );
+const pxtorem = require( 'postcss-pxtorem' );
+const rename = require( 'gulp-rename' );
+const sass = require( 'gulp-sass' );
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import taskHeader from './task-header';
+const boilerplatePath = require( './boilerplate-path' );
+const taskHeader = require( './task-header' );
 
 // constants
 const sources = {
@@ -122,7 +122,7 @@ function js() {
     .pipe( dest( targets.js ) );
 }
 
-export default series(
+module.exports = series(
   // 1/2
   css,
   // 2/2

@@ -3,24 +3,25 @@
  *
  * Gulp tasks to download dependencies.
  */
-
-import { dest, series } from 'gulp';
-import log from 'fancy-log';
-import fs from 'fs';
+const gulp = require( 'gulp' );
+const { dest, series } = gulp;
+const log = require( 'fancy-log' );
+const fs = require( 'fs' );
 
 // Ignore missing declaration files
 // @ts-ignore
-import download from 'gulp-download';
+const download = require( 'gulp-download' );
 // @ts-ignore
-import ghRateLimit from 'gh-rate-limit';
+const ghRateLimit = require( 'gh-rate-limit' );
 // @ts-ignore
-import unzip from 'gulp-unzip';
+const unzip = require( 'gulp-unzip' );
 
 // internal modules
-import boilerplatePath from './boilerplate-path';
-import exec from './exec';
-import taskHeader from './task-header';
-import { GH_TOKEN, TRAVIS, TAGGED_RELEASE } from './env';
+const boilerplatePath = require( './boilerplate-path' );
+const exec = require( './exec' );
+const taskHeader = require( './task-header' );
+const env = require( './env' );
+const { GH_TOKEN, TRAVIS, TAGGED_RELEASE } = env;
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -223,4 +224,4 @@ const getDependencies = () => {
   return deps;
 };
 
-export default getDependencies();
+module.exports = getDependencies();

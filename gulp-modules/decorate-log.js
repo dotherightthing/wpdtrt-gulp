@@ -6,7 +6,7 @@
 
 // Ignore missing declaration files
 // @ts-ignore
-import color from 'gulp-color';
+const color = require( 'gulp-color' );
 
 /**
  * Group: Helpers
@@ -48,4 +48,4 @@ function decorateLog( {
   console.log( color( `${emojis[ state ]} ${textstring}`, `${colors[ state ]}` ) );
 }
 
-export default decorateLog;
+module.exports = decorateLog;

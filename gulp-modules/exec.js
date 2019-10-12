@@ -16,9 +16,8 @@
  * ---
  */
 
-// const util = require( 'util' );
-import util from 'util';
+const util = require( 'util' );
 const { exec: execCallback } = require( 'child_process' );
 const exec = util.promisify( execCallback );
 
-export default exec;
+module.exports = exec;

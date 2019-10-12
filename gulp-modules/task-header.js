@@ -4,7 +4,7 @@
  * Helper functions to visually organise build logs.
  */
 
-import log from 'fancy-log';
+const log = require( 'fancy-log' );
 
 /**
  * Group: Helpers
@@ -36,4 +36,4 @@ function taskHeader(
   log( ' ' );
 }
 
-export default taskHeader;
+module.exports = taskHeader;
