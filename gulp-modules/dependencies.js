@@ -4,17 +4,13 @@
  * Gulp tasks to download dependencies.
  */
 const gulp = require( 'gulp' );
-const { dest, series } = gulp;
-const log = require( 'fancy-log' );
-const fs = require( 'fs' );
-
-// Ignore missing declaration files
-// @ts-ignore
 const download = require( 'gulp-download' );
-// @ts-ignore
+const execa = require( 'execa' );
+const fs = require( 'fs' );
 const ghRateLimit = require( 'gh-rate-limit' );
-// @ts-ignore
+const log = require( 'fancy-log' );
 const unzip = require( 'gulp-unzip' );
+const { dest, series } = gulp;
 
 // internal modules
 const boilerplatePath = require( './boilerplate-path' );
@@ -161,9 +157,20 @@ async function wpUnit() {
     installerPath = `${boilerplatePath()}bin/`;
   }
 
-  const { stdout, stderr } = await exec( `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}` );
-  console.log( stdout );
-  console.error( stderr );
+  const shellScript = `${installerPath}install-wp-tests.sh`;
+
+  if ( !fs.existsSync( shellScript ) ) {
+    console.warn( `${shellScript} does not exist.` );
+    console.warn( 'Skipping..' );
+  }
+
+  try {
+    const { stdout, stderr } = await execa.commandSync( `bash ${shellScript} ${dbName} ${wpVersion}` );
+    console.log( stdout );
+    console.log( stderr );
+  } catch ( error ) {
+    console.log( error.stdout );
+  }
 }
 
 /**

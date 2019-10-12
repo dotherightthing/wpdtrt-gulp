@@ -8,14 +8,9 @@ const { series, src } = gulp;
 const gulpXmltojson = require( 'gulp-xmltojson' );
 const { xmltojson } = gulpXmltojson;
 
-// Ignore missing declaration files
-// @ts-ignore
 const eslint = require( 'gulp-eslint' );
-// @ts-ignore
 const phpcs = require( 'gulp-phpcs' );
-// @ts-ignore
 const sassLint = require( 'gulp-sass-lint' );
-// @ts-ignore
 const tap = require( 'gulp-tap' );
 
 // internal modules

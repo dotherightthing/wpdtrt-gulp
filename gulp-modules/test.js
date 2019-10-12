@@ -8,7 +8,6 @@ const { series } = gulp;
 
 // internal modules
 const boilerplatePath = require( './boilerplate-path' );
-const exec = require( './exec' );
 const execa = require( 'execa' );
 const taskHeader = require( './task-header' );
 
