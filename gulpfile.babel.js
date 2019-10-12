@@ -30,26 +30,28 @@
  * - <Babel 7 - ReferenceError: regeneratorRuntime is not defined: https://stackoverflow.com/a/53559063>
  * - <Migrating a Gulpfile from Gulp 3.9.1 to 4.0.2: https://gist.github.com/dotherightthing/e0639c0c5102993b86362ebe2a651ccc>
  */
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+require( 'core-js/stable' );
+require( 'regenerator-runtime/runtime' );
 
 /**
  * Import gulp methods
  */
-import { series } from 'gulp';
+const gulp = require( 'gulp' );
+const { series } = gulp;
 
 /**
  * Import internal task modules
  */
-import { TRAVIS } from './gulp-modules/env';
-import compile from './gulp-modules/compile';
-import dependencies from './gulp-modules/dependencies';
-import documentation from './gulp-modules/documentation';
-import lint from './gulp-modules/lint';
-import release from './gulp-modules/release';
-import test from './gulp-modules/test';
-import version from './gulp-modules/version';
-import watch from './gulp-modules/watch';
+const env = require( './gulp-modules/env' );
+const { TRAVIS } = env;
+const compile = require( './gulp-modules/compile' );
+const dependencies = require( './gulp-modules/dependencies' );
+const documentation = require( './gulp-modules/documentation' );
+const lint = require( './gulp-modules/lint' );
+const release = require( './gulp-modules/release' );
+const test = require( './gulp-modules/test' );
+const version = require( './gulp-modules/version' );
+const watch = require( './gulp-modules/watch' );
 
 /**
  * Define combination build tasks
@@ -98,7 +100,7 @@ const buildDev = series(
  * - Fix #2 in ./gulpfile-loader.js
  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
-export {
+module.exports = {
   buildDev,
   buildTravis,
   compile,
