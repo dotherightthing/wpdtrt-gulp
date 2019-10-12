@@ -21,7 +21,7 @@
     "keywords": [
       "gulp"
     ],
-    "devDependencies": {
+    "dependencies": {
       "@babel/core": "^7.4.0",
       "@babel/preset-env": "^7.4.1",
       "@babel/register": "^7.5.5",
