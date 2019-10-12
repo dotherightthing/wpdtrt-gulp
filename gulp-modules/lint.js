@@ -21,7 +21,7 @@ const tap = require( 'gulp-tap' );
 // internal modules
 const boilerplatePath = require( './boilerplate-path' );
 const decorateLog = require( './decorate-log' );
-const env = require( 'env' );
+const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const { WORDPRESS_PARENT_THEME_PATH } = env;
