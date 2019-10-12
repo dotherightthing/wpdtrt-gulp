@@ -13,6 +13,8 @@ const taskHeader = require( './task-header' );
 const env = require( './env' );
 const {
   TRAVIS,
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE,
   WORDPRESS_PLUGIN_BOILERPLATE_PATH
 } = env;
 
@@ -52,10 +54,13 @@ async function autoloadUpdatedDependencies() {
  *
  * Replace version strings, using the version set in package.json.
  *
+ * Parameters;
+ *  cb - Callback, for flow control
+ *
  * Returns:
  *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
-function replaceVersions( done ) {
+function replaceVersions( cb ) {
   taskHeader(
     '2/3',
     'Version',
@@ -63,12 +68,14 @@ function replaceVersions( done ) {
     'Replace version strings'
   );
 
-  wpdtrtPluginBump( {
-    inputPathRoot: './',
-    inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
-  } );
+  if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
+    wpdtrtPluginBump( {
+      inputPathRoot: './',
+      inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
+    } );
+  }
 
-  done();
+  cb();
 }
 
 /**
