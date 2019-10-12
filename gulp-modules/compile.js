@@ -7,6 +7,7 @@ const gulp = require( 'gulp' );
 const { dest, series, src } = gulp;
 const autoprefixer = require( 'autoprefixer' );
 const babel = require( 'gulp-babel' );
+const fs = require( 'fs' );
 const postcss = require( 'gulp-postcss' );
 const pxtorem = require( 'postcss-pxtorem' );
 const rename = require( 'gulp-rename' );
@@ -14,7 +15,9 @@ const sass = require( 'gulp-sass' );
 
 // internal modules
 const boilerplatePath = require( './boilerplate-path' );
+const env = require( './env' );
 const taskHeader = require( './task-header' );
+const { CI, WORDPRESS_CHILD_THEME } = env;
 
 // constants
 const sources = {
@@ -89,6 +92,14 @@ function css() {
       minPixelValue: 0
     } )
   ];
+
+  // if child theme
+  if ( WORDPRESS_CHILD_THEME() ) {
+    const suffix = CI ? 'ci' : 'wp';
+
+    // generate an importer file
+    fs.writeFileSync( 'scss/_wpdtrt-import.scss', `@import "wpdtrt/dependencies-${suffix}";\r\n` );
+  }
 
   return src( sources.scss, { allowEmpty: true } )
     .pipe( sass( { outputStyle: 'expanded' } ) )

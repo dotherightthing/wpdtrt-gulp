@@ -4,39 +4,18 @@
  * Gets the path to wpdtrt-plugin-boilerplate.
  */
 
+const env = require( './env' );
+const {
+  WORDPRESS_CHILD_THEME,
+  WORDPRESS_PARENT_THEME,
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE
+} = env;
+
 /**
  * Group: Helpers
  * _____________________________________
  */
-
-/**
- * Function: getPluginName
- *
- * Get the pluginName from the directory path.
- *
- * Returns:
- *   (string) pluginName
- */
-function getPluginName() {
-  // pop() - remove the last element from the path array and return it
-  const pluginName = process.cwd().split( '/' ).pop();
-
-  return pluginName;
-}
-
-/**
- * Function: boilerplateIs
- *
- * Determines whether we're in the boilerplate, or using it as a dependency.
- *
- * Returns:
- *  (boolean) - True if we're in the boilerplate
- */
-function boilerplateIs() {
-  const pluginName = getPluginName();
-
-  return ( pluginName === 'wpdtrt-plugin-boilerplate' );
-}
 
 /**
  * Function: boilerplatePath
@@ -55,7 +34,14 @@ function boilerplateIs() {
 function boilerplatePath() {
   let path = '';
 
-  if ( !boilerplateIs() ) {
+  if (
+    WORDPRESS_PLUGIN // wpdtrt-plugin-boilerplate 1.7.1+
+    || (
+      !WORDPRESS_PLUGIN_BOILERPLATE
+      && !WORDPRESS_PARENT_THEME
+      && !WORDPRESS_CHILD_THEME
+    )
+  ) {
     path = 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/';
   }
 

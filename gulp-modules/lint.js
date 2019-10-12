@@ -21,8 +21,10 @@ const tap = require( 'gulp-tap' );
 // internal modules
 const boilerplatePath = require( './boilerplate-path' );
 const decorateLog = require( './decorate-log' );
+const env = require( 'env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
+const { WORDPRESS_PARENT_THEME_PATH } = env;
 
 // constants
 let phpCsXmlRule = '';
@@ -38,8 +40,11 @@ const sources = {
     './cypress/**/*.js',
     './js/frontend.js',
     './js/backend.js',
+    './js/twentysixteen.js', // wpdtrt
     `./${boilerplatePath()}js/frontend.js`,
-    `./${boilerplatePath()}js/backend.js`
+    `./${boilerplatePath()}js/backend.js`,
+    `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js`,
+    `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js`
   ],
   php: [
     './**/*.php',

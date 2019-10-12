@@ -21,7 +21,12 @@ const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
-const { GH_TOKEN, TRAVIS, TAGGED_RELEASE } = env;
+const {
+  CI,
+  GH_TOKEN,
+  TRAVIS,
+  TAGGED_RELEASE
+} = env;
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -190,7 +195,7 @@ const dependenciesDev = series(
   wpUnit
 );
 
-const dependenciesTravis = series(
+const dependenciesCi = series(
   // 1/5
   yarn,
   // 2/5
@@ -215,8 +220,8 @@ const getDependencies = () => {
 
   if ( TRAVIS && TAGGED_RELEASE ) {
     deps = dependenciesTravisTagged;
-  } else if ( TRAVIS ) {
-    deps = dependenciesTravis;
+  } else if ( CI ) {
+    deps = dependenciesCi;
   } else {
     deps = dependenciesDev;
   }
