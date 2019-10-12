@@ -1,4 +1,6 @@
-# wpdtrt-gulp
+# DTRT Gulp
+
+[![GitHub release](https://img.shields.io/github/release/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/releases) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/issues)
 
 Common build tasks.
 
