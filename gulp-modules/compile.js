@@ -5,7 +5,7 @@
  */
 const gulp = require( 'gulp' );
 const { dest, series, src } = gulp;
-const autoprefixer from 'autoprefixer' );
+const autoprefixer = require( 'autoprefixer' );
 const babel = require( 'gulp-babel' );
 const postcss = require( 'gulp-postcss' );
 const pxtorem = require( 'postcss-pxtorem' );

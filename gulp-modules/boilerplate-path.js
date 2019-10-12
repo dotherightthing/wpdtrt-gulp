@@ -48,7 +48,7 @@ function boilerplateIs() {
  *
  * Example:
  * --- js
- * import boilerplatePath from './boilerplate-path';
+ * const boilerplatePath = require( './boilerplate-path' );
  * phpCsXml: `./${boilerplatePath()}phpcs.xml`;
  * ---
  */
