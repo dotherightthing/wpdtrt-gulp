@@ -36,7 +36,7 @@ const GH_TOKEN = process.env.GH_TOKEN || '';
  *
  * Get the package name (string).
  */
-const PACKAGE_NAME = () => packageJson.name;
+const PACKAGE_NAME = packageJson.name;
 
 /**
  * Constant: RELEASE_TAG
