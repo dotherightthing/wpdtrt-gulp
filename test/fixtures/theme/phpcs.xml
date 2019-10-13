@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="DTRT WordPress">
+    <description>WordPress standards with DTRT dev exclusions</description>
+    <!-- The WordPress ruleset cherry picks sniffs from Generic, PEAR, PSR-2, Squiz etc -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName"/>
+        <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
+    </rule>
+</ruleset>
