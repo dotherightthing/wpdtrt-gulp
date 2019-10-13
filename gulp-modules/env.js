@@ -91,57 +91,42 @@ const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
  *
  * Test for 'wordpress-theme' in package keywords (boolean).
  */
-const WORDPRESS_CHILD_THEME = () => packageJson.keywords.includes( 'wordpress-child-theme' );
+const WORDPRESS_CHILD_THEME = packageJson.keywords.includes( 'wordpress-child-theme' );
 
 /**
  * Constant: WORDPRESS_PARENT_THEME
  *
  * Test for 'wordpress-parent-theme' in package keywords (boolean).
  */
-const WORDPRESS_PARENT_THEME = () => packageJson.keywords.includes( 'wordpress-parent-theme' );
+const WORDPRESS_PARENT_THEME = packageJson.keywords.includes( 'wordpress-parent-theme' );
 
 /**
  * Constant: WORDPRESS_PARENT_THEME_PATH
  *
  * Path to parent theme within WordPress (string).
  */
-const WORDPRESS_PARENT_THEME_PATH = () => !WORDPRESS_PARENT_THEME ? '../wpdtrt/' : '';
+const WORDPRESS_PARENT_THEME_PATH = !WORDPRESS_PARENT_THEME ? '../wpdtrt/' : '';
 
 /**
  * Constant: WORDPRESS_PLUGIN
  *
  * Test for 'wordpress-plugin' in package keywords (boolean).
  */
-const WORDPRESS_PLUGIN = () => packageJson.keywords.includes( 'wordpress-plugin' );
+const WORDPRESS_PLUGIN = packageJson.keywords.includes( 'wordpress-plugin' );
 
 /**
  * Constant: WORDPRESS_PLUGIN_BOILERPLATE
  *
  * Test for 'wordpress-plugin-boilerplate' in package keywords (boolean).
  */
-const WORDPRESS_PLUGIN_BOILERPLATE = () => packageJson.name === 'wpdtrt-plugin-boilerplate';
+const WORDPRESS_PLUGIN_BOILERPLATE = packageJson.name === 'wpdtrt-plugin-boilerplate';
 
 /**
  * Constant: WORDPRESS_PLUGIN_BOILERPLATE_PATH
  *
  * Path to plugin boilerplate (string).
  */
-const WORDPRESS_PLUGIN_BOILERPLATE_PATH = () => {
-  let boilerplatePath = '';
-
-  if (
-    packageJson.keywords.includes( 'wordpress-plugin' ) // wpdtrt-plugin-boilerplate 1.7.1+
-    || (
-      !packageJson.name === 'wpdtrt-plugin-boilerplate'
-      && !packageJson.keywords.includes( 'wordpress-parent-theme' )
-      && !packageJson.keywords.includes( 'wordpress-child-theme' )
-    )
-  ) {
-    boilerplatePath = 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/';
-  }
-
-  return boilerplatePath;
-};
+const WORDPRESS_PLUGIN_BOILERPLATE_PATH = packageJson.keywords.includes( 'wordpress-plugin' ) ? 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/' : '';
 
 module.exports = {
   CI,
