@@ -44,9 +44,13 @@ async function autoloadUpdatedDependencies() {
     'List of classes to be autoloaded'
   );
 
-  const { stdout, stderr } = await exec( 'composer dump-autoload --no-interaction' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await exec( 'composer dump-autoload --no-interaction' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**
@@ -69,10 +73,14 @@ function replaceVersions( cb ) {
   );
 
   if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
-    wpdtrtPluginBump( {
-      inputPathRoot: './',
-      inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
-    } );
+    try {
+      wpdtrtPluginBump( {
+        inputPathRoot: './',
+        inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
+      } );
+    } catch( error ) {
+      console.error( error );
+    }
   } else {
     console.log( 'This repository is not a plugin.' );
     console.log( 'Skipping..\n\n' );
@@ -104,9 +112,13 @@ async function updateDependencies() {
   );
 
   if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
-    const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
-    console.log( stdout );
-    console.error( stderr );
+    try {
+      const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
+      console.log( stdout );
+      console.log( stderr );
+    } catch( error ) {
+      console.error( error.stdout );
+    }
   }
 }
 

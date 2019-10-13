@@ -279,9 +279,13 @@ async function composer() {
     'Composer (PHP)'
   );
 
-  const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**
@@ -335,9 +339,13 @@ async function yarn() {
     'Yarn'
   );
 
-  const { stdout, stderr } = await exec( 'yarn install --non-interactive --production' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await exec( 'yarn install --non-interactive --production' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**

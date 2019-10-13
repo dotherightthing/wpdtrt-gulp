@@ -192,7 +192,7 @@ async function yarn() {
     console.log( stdout );
     console.log( stderr );
   } catch( error ) {
-    console.error( stderr );
+    console.error( error.stdout );
   }
 }
 
