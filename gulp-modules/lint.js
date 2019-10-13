@@ -176,15 +176,15 @@ function php( cb ) {
   );
 
   if ( !Object.keys( phpCsXmlRule ).length ) {
-    console.warn( 'phpCsXmlRule is empty.' );
-    console.warn( 'Skipping..\n\n' );
+    console.log( 'phpCsXmlRule is empty.' );
+    console.log( 'Skipping..\n\n' );
     return cb();
   }
 
   const { ref, exclusions, error } = phpCsXmlRule;
 
   if ( error ) {
-    console.warning( error );
+    console.error( error );
     return src( sources.php );
   }
 
@@ -231,14 +231,14 @@ function phpCsExclusions( cb ) {
 
   // if sources.phpXml
   if ( !Object.prototype.hasOwnProperty.call( sources, 'phpXml' ) ) {
-    console.warn( 'phpXml config not detected.' );
-    console.warn( 'Skipping..\n\n' );
+    console.log( 'phpXml config not detected.' );
+    console.log( 'Skipping..\n\n' );
     return cb();
   }
 
   if ( !Object.keys( phpCsXmlRule ).length ) {
-    console.warn( 'phpCsXmlRule is empty.' );
-    console.warn( 'Skipping..\n\n' );
+    console.log( 'phpCsXmlRule is empty.' );
+    console.log( 'Skipping..\n\n' );
     return cb();
   }
 

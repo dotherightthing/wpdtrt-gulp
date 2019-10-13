@@ -58,9 +58,13 @@ async function composer() {
     'Composer (PHP)'
   );
 
-  const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
+    console.log( stdout );
+    console.error( stderr );
+  } catch ( error ) {
+    console.log( error.stdout );
+  }
 }
 
 /**
@@ -160,8 +164,8 @@ async function wpUnit() {
   const shellScript = `${installerPath}install-wp-tests.sh`;
 
   if ( !fs.existsSync( shellScript ) ) {
-    console.warn( `${shellScript} does not exist.` );
-    console.warn( 'Skipping..' );
+    console.log( `${shellScript} does not exist.` );
+    console.log( 'Skipping..' );
   }
 
   try {
@@ -169,7 +173,7 @@ async function wpUnit() {
     console.log( stdout );
     console.log( stderr );
   } catch ( error ) {
-    console.log( error.stdout );
+    console.error( error.stdout );
   }
 }
 
