@@ -19,7 +19,11 @@ const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const {
+  WORDPRESS_CHILD_THEME,
+  WORDPRESS_PARENT_THEME,
   WORDPRESS_PARENT_THEME_PATH,
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE,
   WORDPRESS_PLUGIN_BOILERPLATE_PATH
 } = env;
 
@@ -46,18 +50,17 @@ const sources = {
   scss: './scss/*.scss'
 };
 
-if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH ) {
+if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
   sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/frontend.js` );
   sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/backend.js` );
   sources.phpCsXml = `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}phpcs.xml`;
 }
 
-if ( WORDPRESS_PARENT_THEME_PATH ) {
+if ( WORDPRESS_CHILD_THEME || WORDPRESS_PARENT_THEME ) {
   sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js` );
   sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js` );
   sources.phpCsXml = `./${WORDPRESS_PARENT_THEME_PATH}phpcs.xml`;
 }
-
 
 /**
  * Group: Tasks
