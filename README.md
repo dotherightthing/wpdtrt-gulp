@@ -1,6 +1,6 @@
 # DTRT Gulp
 
-[![GitHub release](https://img.shields.io/github/release/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/releases) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/issues)
+[![GitHub release](https://img.shields.io/github/release/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/releases) [![Build Status](https://travis-ci.org/dotherightthing/wpdtrt-gulp.svg?branch=master)](https://travis-ci.org/dotherightthing/wpdtrt-gulp) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-gulp.svg)](https://github.com/dotherightthing/wpdtrt-gulp/issues) [![GitHub wiki](https://img.shields.io/badge/documentation-wiki-lightgrey.svg)](https://github.com/dotherightthing/wpdtrt-gulp/wiki)
 
 Common build tasks.
 
