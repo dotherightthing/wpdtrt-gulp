@@ -8,38 +8,37 @@ const { series, src } = gulp;
 const gulpXmltojson = require( 'gulp-xmltojson' );
 const { xmltojson } = gulpXmltojson;
 
-// Ignore missing declaration files
-// @ts-ignore
 const eslint = require( 'gulp-eslint' );
-// @ts-ignore
 const phpcs = require( 'gulp-phpcs' );
-// @ts-ignore
 const sassLint = require( 'gulp-sass-lint' );
-// @ts-ignore
 const tap = require( 'gulp-tap' );
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const decorateLog = require( './decorate-log' );
+const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
+const {
+  WORDPRESS_CHILD_THEME,
+  WORDPRESS_PARENT_THEME,
+  WORDPRESS_PARENT_THEME_PATH,
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE,
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 // constants
-let phpCsXmlRule = '';
+let phpCsXmlRule = {};
 const sources = {
   // note: paths are relative to gulpfile, not this file
   js: [
-    './composer.json',
     './gulpfile.babel.js',
     './gulpfile-loader.js',
     './gulp-modules/*.js',
-    './package.json',
-    './README.md',
     './cypress/**/*.js',
     './js/frontend.js',
     './js/backend.js',
-    `./${boilerplatePath()}js/frontend.js`,
-    `./${boilerplatePath()}js/backend.js`
+    './js/twentysixteen.js' // wpdtrt
   ],
   php: [
     './**/*.php',
@@ -48,9 +47,20 @@ const sources = {
     '!./vendor/**/*.php',
     '!./wp-content/**/*.php'
   ],
-  phpCsXml: `./${boilerplatePath()}phpcs.xml`,
   scss: './scss/*.scss'
 };
+
+if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
+  sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/frontend.js` );
+  sources.js.push( `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}js/backend.js` );
+  sources.phpCsXml = `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}phpcs.xml`;
+}
+
+if ( WORDPRESS_CHILD_THEME || WORDPRESS_PARENT_THEME ) {
+  sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_footer.js` );
+  sources.js.push( `./${WORDPRESS_PARENT_THEME_PATH}js/wpdtrt_header.js` );
+  sources.phpCsXml = `./${WORDPRESS_PARENT_THEME_PATH}phpcs.xml`;
+}
 
 /**
  * Group: Tasks
@@ -145,6 +155,9 @@ function js() {
  *
  * Lint PHP files.
  *
+ * Parameters:
+ *   cb - Callback, for flow control
+ *
  * See:
  * - <PHP_CodeSniffer: https://packagist.org/packages/squizlabs/php_codesniffer>
  * - <WordPress Coding Standards for PHP_CodeSniffer: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards>
@@ -154,13 +167,19 @@ function js() {
  * Returns:
  *   A stream - to signal task completion
  */
-function php() {
+function php( cb ) {
   taskHeader(
     '5/5',
     'QA',
     'Lint',
     'PHP'
   );
+
+  if ( !Object.keys( phpCsXmlRule ).length ) {
+    console.warn( 'phpCsXmlRule is empty.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
 
   const { ref, exclusions, error } = phpCsXmlRule;
 
@@ -191,13 +210,16 @@ function php() {
  *
  * Load config from phpcs.xml.
  *
+ * Parameters:
+ *   cb - Callback, for flow control
+ *
  * See:
  * - <https://github.com/nashwaan/xml-js#convert-xml--js-object--json>
  *
  * Returns:
  *   A stream - to signal task completion
  */
-function phpCsExclusions() {
+function phpCsExclusions( cb ) {
   taskHeader(
     '4/5',
     'QA',
@@ -207,8 +229,21 @@ function phpCsExclusions() {
 
   let errorMessage = false;
 
+  // if sources.phpXml
+  if ( !Object.prototype.hasOwnProperty.call( sources, 'phpXml' ) ) {
+    console.warn( 'phpXml config not detected.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
+
+  if ( !Object.keys( phpCsXmlRule ).length ) {
+    console.warn( 'phpCsXmlRule is empty.' );
+    console.warn( 'Skipping..\n\n' );
+    return cb();
+  }
+
   // load phpcs.xml
-  return src( sources.phpCsXml )
+  return src( sources.phpCsXml, { allowEmpty: true } )
     // convert the XML to JSON
     .pipe( xmltojson( {
       compact: true,

@@ -8,9 +8,19 @@ Common build tasks.
 
 `package.json`:
 
+In keywords, substitute `IDENTIFIER` with one of the following:
+
+* `wordpress-parent-theme`
+* `wordpress-child-theme`
+* `wordpress-plugin`
+* or remove it altogether
+
 ```json
 {
   ...
+  "keywords": [
+    "IDENTIFIER"
+  ],
   "devDependencies": {
     "gulp": "^4.0.2",
     "wpdtrt-gulp": "https://github.com/dotherightthing/wpdtrt-gulp.git"

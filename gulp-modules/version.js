@@ -8,11 +8,15 @@ const { series } = gulp;
 const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
-const { TRAVIS } = env;
+const {
+  TRAVIS,
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE,
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 /**
  * Group: Tasks
@@ -50,10 +54,13 @@ async function autoloadUpdatedDependencies() {
  *
  * Replace version strings, using the version set in package.json.
  *
+ * Parameters;
+ *  cb - Callback, for flow control
+ *
  * Returns:
  *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
-function replaceVersions( done ) {
+function replaceVersions( cb ) {
   taskHeader(
     '2/3',
     'Version',
@@ -61,12 +68,17 @@ function replaceVersions( done ) {
     'Replace version strings'
   );
 
-  wpdtrtPluginBump( {
-    inputPathRoot: './',
-    inputPathBoilerplate: `./${boilerplatePath()}`
-  } );
+  if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
+    wpdtrtPluginBump( {
+      inputPathRoot: './',
+      inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
+    } );
+  } else {
+    console.log( 'This repository is not a plugin.' );
+    console.log( 'Skipping..\n\n' );
+  }
 
-  done();
+  cb();
 }
 
 /**
@@ -91,7 +103,7 @@ async function updateDependencies() {
     'Update Composer dependencies'
   );
 
-  if ( boilerplatePath().length ) {
+  if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
     const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
     console.log( stdout );
     console.error( stderr );

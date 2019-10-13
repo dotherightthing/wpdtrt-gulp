@@ -4,24 +4,25 @@
  * Gulp tasks to download dependencies.
  */
 const gulp = require( 'gulp' );
-const { dest, series } = gulp;
-const log = require( 'fancy-log' );
-const fs = require( 'fs' );
-
-// Ignore missing declaration files
-// @ts-ignore
 const download = require( 'gulp-download' );
-// @ts-ignore
+const execa = require( 'execa' );
+const fs = require( 'fs' );
 const ghRateLimit = require( 'gh-rate-limit' );
-// @ts-ignore
+const log = require( 'fancy-log' );
 const unzip = require( 'gulp-unzip' );
+const { dest, series } = gulp;
 
 // internal modules
-const boilerplatePath = require( './boilerplate-path' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
-const { GH_TOKEN, TRAVIS, TAGGED_RELEASE } = env;
+const {
+  CI,
+  GH_TOKEN,
+  TAGGED_RELEASE,
+  TRAVIS,
+  WORDPRESS_PLUGIN_BOILERPLATE_PATH
+} = env;
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -152,13 +153,24 @@ async function wpUnit() {
   const wpVersion = 'latest';
   let installerPath = 'bin/';
 
-  if ( boilerplatePath().length ) {
-    installerPath = `${boilerplatePath()}bin/`;
+  if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
+    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}bin/`;
   }
 
-  const { stdout, stderr } = await exec( `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}` );
-  console.log( stdout );
-  console.error( stderr );
+  const shellScript = `${installerPath}install-wp-tests.sh`;
+
+  if ( !fs.existsSync( shellScript ) ) {
+    console.warn( `${shellScript} does not exist.` );
+    console.warn( 'Skipping..' );
+  }
+
+  try {
+    const { stdout, stderr } = await execa.commandSync( `bash ${shellScript} ${dbName} ${wpVersion}` );
+    console.log( stdout );
+    console.log( stderr );
+  } catch ( error ) {
+    console.log( error.stdout );
+  }
 }
 
 /**
@@ -190,7 +202,7 @@ const dependenciesDev = series(
   wpUnit
 );
 
-const dependenciesTravis = series(
+const dependenciesCi = series(
   // 1/5
   yarn,
   // 2/5
@@ -215,8 +227,8 @@ const getDependencies = () => {
 
   if ( TRAVIS && TAGGED_RELEASE ) {
     deps = dependenciesTravisTagged;
-  } else if ( TRAVIS ) {
-    deps = dependenciesTravis;
+  } else if ( CI ) {
+    deps = dependenciesCi;
   } else {
     deps = dependenciesDev;
   }

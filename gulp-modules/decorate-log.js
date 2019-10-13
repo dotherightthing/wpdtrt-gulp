@@ -4,8 +4,6 @@
  * Functions relating to styling logged messages.
  */
 
-// Ignore missing declaration files
-// @ts-ignore
 const color = require( 'gulp-color' );
 
 /**
