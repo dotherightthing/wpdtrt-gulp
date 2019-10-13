@@ -21,7 +21,8 @@ const {
   PACKAGE_NAME,
   TRAVIS_TAG,
   WORDPRESS_PARENT_THEME,
-  WORDPRESS_PLUGIN
+  WORDPRESS_PLUGIN,
+  WORDPRESS_PLUGIN_BOILERPLATE
 } = env;
 
 // constants
@@ -304,7 +305,7 @@ function copy() {
 
     if ( WORDPRESS_PARENT_THEME ) {
       files = sources.wordPressThemeReleaseFiles;
-    } else if ( WORDPRESS_PLUGIN ) {
+    } else if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
       files = sources.wordPressPluginReleaseFiles;
     }
 
