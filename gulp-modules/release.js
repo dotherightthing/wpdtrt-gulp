@@ -17,8 +17,9 @@ const env = require( './env' );
 const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const {
+  BITBUCKET_TAG,
   PACKAGE_NAME,
-  RELEASE_TAG,
+  TRAVIS_TAG,
   WORDPRESS_PARENT_THEME,
   WORDPRESS_PLUGIN
 } = env;
@@ -354,8 +355,14 @@ function zipFiles() {
     'Zip file'
   );
 
+  let releaseTag = '';
+
+  if ( BITBUCKET_TAG || TRAVIS_TAG ) {
+    releaseTag = `-${BITBUCKET_TAG}${TRAVIS_TAG}`;
+  }
+
   return src( [ `./${targets.zipSource}/**/*` ], { base: '.' } )
-    .pipe( zip( `release${RELEASE_TAG}.zip` ) )
+    .pipe( zip( `release${releaseTag}.zip` ) )
     .pipe( dest( './' ) );
 }
 

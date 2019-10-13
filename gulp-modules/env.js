@@ -15,6 +15,16 @@ const packageJson = require( `${path.resolve( process.cwd() )}/package.json` );
  */
 
 /**
+ * Constant: BITBUCKET_TAG
+ *
+ * Gets the release tag (if deploying a release from the master branch) (string).
+ *
+ * Note:
+ * - if the current build is for a git tag, this variable is set to the tag’s name.
+ */
+const BITBUCKET_TAG = ( process.env.BITBUCKET_TAG !== 'undefined' && process.env.BITBUCKET_TAG !== '' ) ? process.env.BITBUCKET_TAG : '';
+
+/**
  * Constant: CI
  *
  * CI flag available in Bitbucket and Travis (boolean).
@@ -39,31 +49,6 @@ const GH_TOKEN = process.env.GH_TOKEN || '';
 const PACKAGE_NAME = packageJson.name;
 
 /**
- * Constant: RELEASE_TAG
- *
- * Gets the release tag (if deploying a release from the master branch) (string).
- *
- * Note:
- * - if the current build is for a git tag, this variable is set to the tag’s name.
- *
- * See:
- * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
- */
-const RELEASE_TAG = () => {
-  let releaseTag = '';
-
-  if ( typeof process.env.TRAVIS !== 'undefined' ) {
-    if ( process.env.TRAVIS_TAG !== '' ) {
-      releaseTag = `-${process.env.TRAVIS_TAG}`;
-    }
-  } else if ( typeof process.env.BITBUCKET_TAG !== 'undefined' ) {
-    releaseTag = `-${process.env.BITBUCKET_TAG}`;
-  }
-
-  return releaseTag;
-};
-
-/**
  * Constant: TAGGED_RELEASE
  *
  * Checks whether we are deploying a release from the master branch.
@@ -85,6 +70,19 @@ const TAGGED_RELEASE = process.env.TRAVIS_TAG || false;
  * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
  */
 const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
+
+/**
+ * Constant: TRAVIS_TAG
+ *
+ * Gets the release tag (if deploying a release from the master branch) (string).
+ *
+ * Note:
+ * - if the current build is for a git tag, this variable is set to the tag’s name.
+ *
+ * See:
+ * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
+ */
+const TRAVIS_TAG = ( process.env.TRAVIS !== 'undefined' && process.env.TRAVIS_TAG !== '' ) ? process.env.TRAVIS_TAG : '';
 
 /**
  * Constant: WORDPRESS_CHILD_THEME
@@ -129,12 +127,13 @@ const WORDPRESS_PLUGIN_BOILERPLATE = packageJson.name === 'wpdtrt-plugin-boilerp
 const WORDPRESS_PLUGIN_BOILERPLATE_PATH = packageJson.keywords.includes( 'wordpress-plugin' ) ? 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/' : '';
 
 module.exports = {
+  BITBUCKET_TAG,
   CI,
   GH_TOKEN,
   PACKAGE_NAME,
-  RELEASE_TAG,
   TAGGED_RELEASE,
   TRAVIS,
+  TRAVIS_TAG,
   WORDPRESS_CHILD_THEME,
   WORDPRESS_PARENT_THEME,
   WORDPRESS_PARENT_THEME_PATH,
