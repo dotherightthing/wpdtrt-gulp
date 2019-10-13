@@ -30,69 +30,69 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'Tasks', function () {
+describe( 'Task', function () {
   this.timeout( 60000 );
 
   describe( 'build', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it.skip( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'dependencies', function () {
-    it( 'Runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'compile', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'documentation', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it.skip( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'lint', function () {
-    it( 'Runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'release', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it.skip( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'test', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it.skip( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
 
   describe( 'version', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it.skip( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
-      console.log( stdout );
+      // console.log( stdout );
       expect( stderr ).to.equal( '' );
     } ) );
   } );
