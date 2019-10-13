@@ -109,7 +109,7 @@ function github( done ) {
  * Returns:
  *   A stream - to signal task completion
  */
-function naturalDocs( cb ) {
+function naturalDocs( done ) {
   taskHeader(
     '4/5',
     'Dependencies',
@@ -127,7 +127,7 @@ function naturalDocs( cb ) {
         .pipe( dest( './' ) );
     }
 
-    return cb();
+    return done();
   };
 
   return getNaturalDocs();
