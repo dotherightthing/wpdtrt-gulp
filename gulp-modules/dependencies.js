@@ -61,9 +61,9 @@ async function composer() {
   try {
     const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
     console.log( stdout );
-    console.error( stderr );
+    console.log( stderr );
   } catch ( error ) {
-    console.log( error.stdout );
+    console.error( error.stdout );
   }
 }
 
@@ -88,12 +88,11 @@ function github( done ) {
   } ).then( ( status ) => {
     log( 'Github API rate limit:' );
     log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
-    log( ' ' );
 
     done();
   } ).catch( err => {
     console.error( err );
-    console.log( `GH_TOKEN.length = ${GH_TOKEN.length}` );
+    console.error( `GH_TOKEN.length = ${GH_TOKEN.length}` );
 
     done();
   } );
@@ -190,9 +189,13 @@ async function yarn() {
     'Yarn'
   );
 
-  const { stdout, stderr } = await exec( 'yarn install --non-interactive' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await execa.commandSync( 'yarn install --non-interactive' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( stderr );
+  }
 }
 
 const dependenciesDev = series(

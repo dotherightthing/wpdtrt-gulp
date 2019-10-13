@@ -42,7 +42,7 @@ describe( 'Tasks', function () {
   } );
 
   describe( 'dependencies', function () {
-    it.skip( 'Runs without error', mochaAsync(async function() {
+    it( 'Runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr ).to.equal( '' );
