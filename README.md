@@ -33,3 +33,13 @@ Common build tasks.
   ...
 }
 ```
+
+## Tests
+
+Tests are written in [Mocha](https://mochajs.org/), with [Chai](https://www.chaijs.com/) assertions.
+
+[Execa](https://github.com/sindresorhus/execa) is used to verify the output of the [gulp](https://gulpjs.com/) Node [`child process`](https://nodejs.org/api/child_process.html#child_process_child_process).
+
+```bash
+yarn run test
+```
