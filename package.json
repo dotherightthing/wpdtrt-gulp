@@ -2,7 +2,7 @@
   "name": "wpdtrt-gulp",
   "version": "0.1.0",
   "description": "Common build tasks.",
-  "main": "gulpfile.babel.js",
+  "main": "gulpfile-loader.js",
   "person": {
     "name": "Dan Smith",
     "email": "dev@dotherightthing.co.nz",
