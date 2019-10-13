@@ -37,7 +37,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -45,7 +45,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -53,7 +53,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -61,7 +61,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -69,7 +69,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -77,7 +77,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -85,7 +85,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 
@@ -93,7 +93,7 @@ describe( 'Task', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
-      expect( stderr ).to.equal( '' );
+      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 } );
