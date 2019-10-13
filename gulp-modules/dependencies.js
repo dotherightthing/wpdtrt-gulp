@@ -86,14 +86,12 @@ function github( done ) {
   return ghRateLimit( {
     token: GH_TOKEN
   } ).then( ( status ) => {
-    log( 'Github API rate limit:' );
-    log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
-
+    console.log( 'Github API rate limit:' );
+    console.log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
     done();
   } ).catch( err => {
     console.error( err );
     console.error( `GH_TOKEN.length = ${GH_TOKEN.length}` );
-
     done();
   } );
 }
@@ -164,7 +162,7 @@ async function wpUnit() {
 
   if ( !fs.existsSync( shellScript ) ) {
     console.log( `${shellScript} does not exist.` );
-    console.log( 'Skipping..' );
+    console.log( 'Skipping..\n\n' );
   }
 
   try {
