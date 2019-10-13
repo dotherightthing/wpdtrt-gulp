@@ -4,7 +4,7 @@
  * Gulp tasks to generate documentation.
  */
 
-const exec = require( './exec' );
+const execa = require( 'execa' );
 
 // internal modules
 const taskHeader = require( './task-header' );
@@ -39,7 +39,7 @@ async function naturalDocs() {
     const naturalDocsPath = 'Natural Docs/NaturalDocs.exe';
 
     try {
-      const { stdout, stderr } = await exec( `mono "${naturalDocsPath}" ./config/naturaldocs` );
+      const { stdout, stderr } = await execa.commandSync( `mono "${naturalDocsPath}" ./config/naturaldocs` );
       console.log( stdout );
       console.log( stderr );
     } catch( error ) {

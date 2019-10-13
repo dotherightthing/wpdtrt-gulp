@@ -4,6 +4,7 @@
  * Gulp tasks to watch files for changes.
  */
 const gulp = require( 'gulp' );
+
 const { series, watch } = gulp;
 
 // internal modules

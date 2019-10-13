@@ -9,7 +9,7 @@
  * Example:
  * --- js
  * async function execPromiseTest() {
- *   const { stdout, stderr } = await exec( 'echo "execPromise test"' );
+ *   const { stdout, stderr } = await execa.commandSync( 'echo "execPromise test"' );
  *   console.log( stdout );
  *   console.error( stderr );
  * }

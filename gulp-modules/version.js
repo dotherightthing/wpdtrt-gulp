@@ -3,12 +3,13 @@
  *
  * Gulp tasks to version files prior to a release.
  */
+const execa = require( 'execa' );
 const gulp = require( 'gulp' );
-const { series } = gulp;
 const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 
+const { series } = gulp;
+
 // internal modules
-const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
 const {
@@ -45,7 +46,7 @@ async function autoloadUpdatedDependencies() {
   );
 
   try {
-    const { stdout, stderr } = await exec( 'composer dump-autoload --no-interaction' );
+    const { stdout, stderr } = await execa.commandSync( 'composer dump-autoload --no-interaction' );
     console.log( stdout );
     console.log( stderr );
   } catch( error ) {
@@ -113,7 +114,7 @@ async function updateDependencies() {
 
   if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
     try {
-      const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
+      const { stdout, stderr } = await execa.commandSync( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
       console.log( stdout );
       console.log( stderr );
     } catch( error ) {

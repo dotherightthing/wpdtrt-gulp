@@ -3,17 +3,16 @@
  *
  * Gulp tasks to download dependencies.
  */
-const gulp = require( 'gulp' );
 const download = require( 'gulp-download' );
 const execa = require( 'execa' );
 const fs = require( 'fs' );
 const ghRateLimit = require( 'gh-rate-limit' );
-const log = require( 'fancy-log' );
+const gulp = require( 'gulp' );
 const unzip = require( 'gulp-unzip' );
+
 const { dest, series } = gulp;
 
 // internal modules
-const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const env = require( './env' );
 const {
@@ -59,7 +58,7 @@ async function composer() {
   );
 
   try {
-    const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
+    const { stdout, stderr } = await execa.commandSync( 'composer install --prefer-dist --no-interaction --no-suggest' );
     console.log( stdout );
     console.log( stderr );
   } catch ( error ) {
@@ -166,7 +165,7 @@ async function wpUnit() {
   }
 
   try {
-    const { stdout, stderr } = await execa.commandSync( `bash ${shellScript} ${dbName} ${wpVersion}` );
+    const { stdout, stderr } = await execa.commandSync( `bash ${shellScript} ${dbName} ${wpVersion}`, { shell: true } );
     console.log( stdout );
     console.log( stderr );
   } catch ( error ) {

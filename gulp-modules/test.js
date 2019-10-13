@@ -4,6 +4,7 @@
  * Gulp tasks to run unit tests.
  */
 const gulp = require( 'gulp' );
+
 const { series } = gulp;
 
 // internal modules

@@ -3,15 +3,16 @@
  *
  * Gulp tasks to compile code.
  */
-const gulp = require( 'gulp' );
-const { dest, series, src } = gulp;
 const autoprefixer = require( 'autoprefixer' );
 const babel = require( 'gulp-babel' );
 const fs = require( 'fs' );
+const gulp = require( 'gulp' );
 const postcss = require( 'gulp-postcss' );
 const pxtorem = require( 'postcss-pxtorem' );
 const rename = require( 'gulp-rename' );
 const sass = require( 'gulp-sass' );
+
+const { dest, series, src } = gulp;
 
 // internal modules
 const env = require( './env' );
