@@ -6,15 +6,16 @@
  * See:
  * - <Globtester: http://www.globtester.com/>
  */
-const gulp = require( 'gulp' );
-const { dest, series, src } = gulp;
 const del = require( 'del' );
+const execa = require( 'execa' );
+const gulp = require( 'gulp' );
 const print = require( 'gulp-print' ).default;
 const zip = require( 'gulp-zip' );
 
+const { dest, series, src } = gulp;
+
 // internal modules
 const env = require( './env' );
-const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const {
   BITBUCKET_TAG,
@@ -279,9 +280,13 @@ async function composer() {
     'Composer (PHP)'
   );
 
-  const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await execa.commandSync( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**
@@ -335,9 +340,13 @@ async function yarn() {
     'Yarn'
   );
 
-  const { stdout, stderr } = await exec( 'yarn install --non-interactive --production' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await execa.commandSync( 'yarn install --non-interactive --production' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**

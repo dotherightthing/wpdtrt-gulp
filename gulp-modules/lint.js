@@ -3,20 +3,20 @@
  *
  * Gulp tasks to lint code.
  */
-const gulp = require( 'gulp' );
-const { series, src } = gulp;
-const gulpXmltojson = require( 'gulp-xmltojson' );
-const { xmltojson } = gulpXmltojson;
-
 const eslint = require( 'gulp-eslint' );
+const execa = require( 'execa' );
+const gulp = require( 'gulp' );
+const gulpXmltojson = require( 'gulp-xmltojson' );
 const phpcs = require( 'gulp-phpcs' );
 const sassLint = require( 'gulp-sass-lint' );
 const tap = require( 'gulp-tap' );
 
+const { series, src } = gulp;
+const { xmltojson } = gulpXmltojson;
+
 // internal modules
 const decorateLog = require( './decorate-log' );
 const env = require( './env' );
-const exec = require( './exec' );
 const taskHeader = require( './task-header' );
 const {
   WORDPRESS_CHILD_THEME,
@@ -87,9 +87,13 @@ async function composer() {
     'composer.json'
   );
 
-  const { stdout, stderr } = await exec( 'composer validate' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await execa.commandSync( 'composer validate' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch ( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**
