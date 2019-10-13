@@ -97,7 +97,7 @@ function css() {
   ];
 
   // if child theme
-  if ( WORDPRESS_CHILD_THEME() ) {
+  if ( WORDPRESS_CHILD_THEME ) {
     const suffix = CI ? 'ci' : 'wp';
 
     // generate an importer file
