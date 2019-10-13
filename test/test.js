@@ -31,10 +31,10 @@ const mochaAsync = (fn) => {
 };
 
 describe( 'Task', function () {
-  this.timeout( 60000 );
+  this.timeout( 120000 );
 
   describe( 'build', function () {
-    it.skip( 'runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
       expect( stderr ).to.equal( '' );
@@ -58,7 +58,7 @@ describe( 'Task', function () {
   } );
 
   describe( 'documentation', function () {
-    it.skip( 'runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
       expect( stderr ).to.equal( '' );
@@ -74,7 +74,7 @@ describe( 'Task', function () {
   } );
 
   describe( 'release', function () {
-    it.skip( 'runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
       expect( stderr ).to.equal( '' );
@@ -82,7 +82,7 @@ describe( 'Task', function () {
   } );
 
   describe( 'test', function () {
-    it.skip( 'runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
       expect( stderr ).to.equal( '' );
@@ -90,7 +90,7 @@ describe( 'Task', function () {
   } );
 
   describe( 'version', function () {
-    it.skip( 'runs without error', mochaAsync(async function() {
+    it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       // console.log( stdout );
       expect( stderr ).to.equal( '' );

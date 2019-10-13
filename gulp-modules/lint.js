@@ -87,9 +87,13 @@ async function composer() {
     'composer.json'
   );
 
-  const { stdout, stderr } = await exec( 'composer validate' );
-  console.log( stdout );
-  console.error( stderr );
+  try {
+    const { stdout, stderr } = await exec( 'composer validate' );
+    console.log( stdout );
+    console.log( stderr );
+  } catch ( error ) {
+    console.error( error.stdout );
+  }
 }
 
 /**
