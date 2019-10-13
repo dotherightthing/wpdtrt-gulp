@@ -5,6 +5,11 @@
  * Unit tests for wpdtrt-gulp utility.
  * Written in Mocha, with Chai assertions.
  *
+ * Note:
+ * - Tests are run in project root
+ * - In tested code, console.error/warn Prints to stderr with newline, so will cause test to fail when checking against stderr
+ * - In tested code, console.log Prints to stdout with newline, so won't cause test to fail when checking against stderr
+ *
  * ---
  * yarn run tests
  * ---
@@ -16,84 +21,79 @@ const execa = require( 'execa' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-async function testCommand( command, done ) {
-  // note: tests appear to be run in root
-  try {
-    const result = await execa.commandSync( command );
-    done();
-    console.log( result.stdout );
-  } catch ( error ) {
-    done( error );
-    console.error( error.stderr );
-  }
-}
+// https://labs.chiedo.com/post/async-mocha-tests/
+const mochaAsync = (fn) => {
+  return done => {
+    fn.call().then(done, err => {
+      done(err);
+    });
+  };
+};
 
-describe( 'Tasks', () => {
-  describe( 'dependencies', () => {
-    it( 'Runs without error', async ( done ) => {
-      // note: tests appear to be run in root
-      const output = testCommand( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme', done );
-  
-      // when package.json is missing:
-      // EPERM: operation not permitted
+describe( 'Tasks', function () {
+  this.timeout( 60000 );
 
-      expect( output === {}, 'Output message unexpected' );
-    } );
+  describe( 'build', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
   } );
 
-  // describe( 'dependencies', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp dependencies --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'dependencies', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'compile', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp compile --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'compile', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'docs', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp documentation --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'documentation', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'lint', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp lint --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'lint', function () {
+    it( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'release', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp release --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'release', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'test', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp test --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'test', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 
-  // describe( 'version', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp version --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
-
-  // describe( 'xxx', function () {
-  //   it( 'Runs without error', ( done ) => {
-  //     const command = `../../node_modules/.bin/gulp xxx --gulpfile ../../gulpfile-loader.js --cwd ${fixture}`;
-  //     runCommand( command, done );
-  //   } );
-  // } );
+  describe( 'version', function () {
+    it.skip( 'Runs without error', mochaAsync(async function() {
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      console.log( stdout );
+      expect( stderr ).to.equal( '' );
+    } ) );
+  } );
 } );
