@@ -58,37 +58,22 @@ const watch = require( './gulp-modules/watch' );
  */
 
 const buildTravis = series(
-  // 1
   dependencies,
-  // 2
   lint,
-  // 3
   compile,
-  // 4
   version,
-  // 5
   documentation,
-  // 6
   test,
-  // 7
   release
 );
 
 const buildDev = series(
-  // 1
   dependencies,
-  // 2
   lint,
-  // 3
   compile,
-  // 4
   version,
-  // 5
   documentation,
-  // 6
-  test,
-  // 8
-  watch
+  test
 );
 
 /**
