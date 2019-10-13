@@ -67,15 +67,14 @@
     "sass-lint": "^1.12.1",
     "tenon-node": "^0.4.1"
   },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "execa": "^2.1.0",
+    "gulp": "^4.0.2",
+    "mocha": "^6.2.1"
+  },
   "scripts": {
-    "build": "gulp --gulpfile ./gulpfile-loader.js",
-    "dependencies": "gulp dependencies --gulpfile ./gulpfile-loader.js",
-    "docs": "gulp documentation --gulpfile ./gulpfile-loader.js",
-    "lint": "gulp lint --gulpfile ./gulpfile-loader.js",
-    "release": "gulp release --gulpfile ./gulpfile-loader.js",
-    "test": "gulp test --gulpfile ./gulpfile-loader.js",
-    "version": "gulp version --gulpfile ./gulpfile-loader.js",
-    "watch": "gulp compile --gulpfile ./gulpfile-loader.js && gulp watch --gulpfile ./gulpfile-loader.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
