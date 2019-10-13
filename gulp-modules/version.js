@@ -73,6 +73,9 @@ function replaceVersions( cb ) {
       inputPathRoot: './',
       inputPathBoilerplate: `./${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`
     } );
+  } else {
+    console.log( 'This repository is not a plugin.' );
+    console.log( 'Skipping..\n\n' );
   }
 
   cb();
