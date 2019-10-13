@@ -4,22 +4,17 @@
 
 Common build tasks.
 
-## Usage
+## Prerequisites
 
 `package.json`:
-
-In keywords, substitute `IDENTIFIER` with one of the following:
-
-* `wordpress-parent-theme`
-* `wordpress-child-theme`
-* `wordpress-plugin`
-* or remove it altogether
 
 ```json
 {
   ...
+  "name": "your-package-name",
   "keywords": [
-    "IDENTIFIER"
+    ...,
+    "wordpress-parent-theme" OR "wordpress-child-theme" OR "wordpress-plugin" OR ""
   ],
   "devDependencies": {
     "gulp": "^4.0.2",
