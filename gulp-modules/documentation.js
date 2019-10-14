@@ -7,8 +7,8 @@
 const execa = require( 'execa' );
 
 // internal modules
-const taskHeader = require( './task-header' );
-const env = require( './env' );
+const taskHeader = require( './helpers/task-header' );
+const env = require( './helpers/env' );
 const {
   TAGGED_RELEASE
 } = env;
@@ -27,12 +27,12 @@ const {
  * Generate JS & PHP documentation.
  */
 async function naturalDocs() {
-  taskHeader(
+  console.log( taskHeader(
     '1/1',
     'Documentation',
     'Documentation',
     'Natural Docs (JS & PHP)'
-  );
+  ) );
 
   if ( TAGGED_RELEASE ) {
     // Quotes escape space better than backslash on Travis

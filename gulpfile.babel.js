@@ -42,7 +42,7 @@ const { series } = gulp;
 /**
  * Import internal task modules
  */
-const env = require( './gulp-modules/env' );
+const env = require( './gulp-modules/helpers/env' );
 const { TRAVIS } = env;
 const compile = require( './gulp-modules/compile' );
 const dependencies = require( './gulp-modules/dependencies' );

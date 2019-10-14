@@ -9,8 +9,8 @@ const { series, watch } = gulp;
 
 // internal modules
 const compile = require( './compile' );
-const env = require( './env' );
-const taskHeader = require( './task-header' );
+const env = require( './helpers/env' );
+const taskHeader = require( './helpers/task-header' );
 const {
   WORDPRESS_PLUGIN_BOILERPLATE_PATH
 } = env;
@@ -41,12 +41,12 @@ const sources = {
  * Watch for changes to files.
  */
 function devWatch() {
-  taskHeader(
+  console.log( taskHeader(
     '1/1',
     'Watch',
     'Compile',
     'JS & SCSS'
-  );
+  ) );
 
   watch( sources.scss, series( compile ) );
   watch( sources.js, series( compile ) );
