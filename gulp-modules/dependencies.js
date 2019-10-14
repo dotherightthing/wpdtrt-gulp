@@ -13,8 +13,8 @@ const unzip = require( 'gulp-unzip' );
 const { dest, series } = gulp;
 
 // internal modules
-const taskHeader = require( './task-header' );
-const env = require( './env' );
+const taskHeader = require( './helpers/task-header' );
+const env = require( './helpers/env' );
 const {
   CI,
   GH_TOKEN,
@@ -50,12 +50,12 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
  * Install the Composer dependencies listed in composer.json.
  */
 async function composer() {
-  taskHeader(
+  console.log( taskHeader(
     '3/5',
     'Dependencies',
     'Install',
     'Composer (PHP)'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'composer install --prefer-dist --no-interaction --no-suggest' );
@@ -75,12 +75,12 @@ async function composer() {
  * - done() calls the gulp callback, to signal task completion
  */
 function github( done ) {
-  taskHeader(
+  console.log( taskHeader(
     '2/5',
     'Dependencies',
     'Install',
     'Check current Github API rate limit for automated installs'
-  );
+  ) );
 
   return ghRateLimit( {
     token: GH_TOKEN
@@ -110,12 +110,12 @@ function github( done ) {
  *   A stream - to signal task completion
  */
 function naturalDocs( done ) {
-  taskHeader(
+  console.log( taskHeader(
     '4/5',
     'Dependencies',
     'Install',
     'Docs'
-  );
+  ) );
 
   const getNaturalDocs = () => {
     if ( !fs.existsSync( `${process.cwd()}/Natural Docs/NaturalDocs.exe` ) ) {
@@ -142,22 +142,22 @@ function naturalDocs( done ) {
  * - <Testing & Debugging: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables>
  */
 async function wpUnit() {
-  taskHeader(
+  console.log( taskHeader(
     '5/5',
     'Dependencies',
     'Install',
     'WP Unit'
-  );
+  ) );
 
   const dbName = `${pluginNameSafe}_wpunit_${Date.now()}`;
   const wpVersion = 'latest';
-  let installerPath = 'bin/';
+  let installerPath = '';
 
   if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
-    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}bin/`;
+    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`;
   }
 
-  const shellScript = `${installerPath}install-wp-tests.sh`;
+  const shellScript = `${installerPath}bin/install-wp-tests.sh`;
 
   if ( !fs.existsSync( shellScript ) ) {
     console.log( `${shellScript} does not exist.` );
@@ -179,12 +179,12 @@ async function wpUnit() {
  * Install Yarn dependencies.
  */
 async function yarn() {
-  taskHeader(
+  console.log( taskHeader(
     '1/5',
     'Dependencies',
     'Install',
     'Yarn'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'yarn install --non-interactive' );

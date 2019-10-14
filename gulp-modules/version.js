@@ -10,8 +10,8 @@ const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 const { series } = gulp;
 
 // internal modules
-const taskHeader = require( './task-header' );
-const env = require( './env' );
+const taskHeader = require( './helpers/task-header' );
+const env = require( './helpers/env' );
 const {
   TRAVIS,
   WORDPRESS_PLUGIN,
@@ -38,12 +38,12 @@ const {
  *   A stream - to signal task completion
  */
 async function autoloadUpdatedDependencies() {
-  taskHeader(
+  console.log( taskHeader(
     '3/3',
     'Version',
     'Generate',
     'List of classes to be autoloaded'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'composer dump-autoload --no-interaction' );
@@ -66,12 +66,12 @@ async function autoloadUpdatedDependencies() {
  *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
 function replaceVersions( cb ) {
-  taskHeader(
+  console.log( taskHeader(
     '2/3',
     'Version',
     'Bump',
     'Replace version strings'
-  );
+  ) );
 
   if ( WORDPRESS_PLUGIN || WORDPRESS_PLUGIN_BOILERPLATE ) {
     try {
@@ -105,12 +105,12 @@ function replaceVersions( cb ) {
  *   A stream - to signal task completion
  */
 async function updateDependencies() {
-  taskHeader(
+  console.log( taskHeader(
     '1/3',
     'Version',
     'Bump',
     'Update Composer dependencies'
-  );
+  ) );
 
   if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
     try {

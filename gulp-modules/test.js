@@ -8,9 +8,9 @@ const gulp = require( 'gulp' );
 const { series } = gulp;
 
 // internal modules
-const env = require( './env' );
+const env = require( './helpers/env' );
 const execa = require( 'execa' );
-const taskHeader = require( './task-header' );
+const taskHeader = require( './helpers/task-header' );
 const {
   WORDPRESS_PLUGIN_BOILERPLATE_PATH
 } = env;
@@ -33,12 +33,12 @@ const {
  *   A stream - to signal task completion
  */
 async function cypressIo() {
-  taskHeader(
+  console.log( taskHeader(
     '1/2',
     'QA',
     'Tests',
     'Cypress'
-  );
+  ) );
 
   // only child plugins have tests
   // child plugins run off the boilerplatePath
@@ -65,12 +65,12 @@ async function cypressIo() {
  *   A stream - to signal task completion
  */
 async function wpUnit() {
-  taskHeader(
+  console.log( taskHeader(
     '2/2',
     'QA',
     'Tests',
     'WPUnit'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( './vendor/bin/phpunit --configuration phpunit.xml.dist' );

@@ -15,8 +15,8 @@ const sass = require( 'gulp-sass' );
 const { dest, series, src } = gulp;
 
 // internal modules
-const env = require( './env' );
-const taskHeader = require( './task-header' );
+const env = require( './helpers/env' );
+const taskHeader = require( './helpers/task-header' );
 const {
   CI,
   WORDPRESS_CHILD_THEME,
@@ -59,12 +59,12 @@ const targets = {
  *   A stream - to signal task completion
  */
 function css() {
-  taskHeader(
+  console.log( taskHeader(
     '1/2',
     'Assets',
     'Compile',
     'SCSS -> CSS'
-  );
+  ) );
 
   const processors = [
     autoprefixer( {
@@ -120,12 +120,12 @@ function css() {
  *   A stream - to signal task completion
  */
 function js() {
-  taskHeader(
+  console.log( taskHeader(
     '2/2',
     'Assets',
     'Transpile',
     'ES6+ JS -> ES5 JS'
-  );
+  ) );
 
   return src( sources.js, { allowEmpty: true } )
     .pipe( babel( {

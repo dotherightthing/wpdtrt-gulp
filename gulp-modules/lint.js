@@ -3,10 +3,12 @@
  *
  * Gulp tasks to lint code.
  */
+const color = require( 'gulp-color' );
 const eslint = require( 'gulp-eslint' );
 const execa = require( 'execa' );
 const gulp = require( 'gulp' );
 const gulpXmltojson = require( 'gulp-xmltojson' );
+const log = require( 'fancy-log' );
 const phpcs = require( 'gulp-phpcs' );
 const sassLint = require( 'gulp-sass-lint' );
 const tap = require( 'gulp-tap' );
@@ -15,9 +17,9 @@ const { series, src } = gulp;
 const { xmltojson } = gulpXmltojson;
 
 // internal modules
-const decorateLog = require( './decorate-log' );
-const env = require( './env' );
-const taskHeader = require( './task-header' );
+const decorateLog = require( './helpers/decorate-log' );
+const env = require( './helpers/env' );
+const taskHeader = require( './helpers/task-header' );
 const {
   WORDPRESS_CHILD_THEME,
   WORDPRESS_PARENT_THEME,
@@ -80,12 +82,12 @@ if ( WORDPRESS_CHILD_THEME || WORDPRESS_PARENT_THEME ) {
  * Lint composer.json.
  */
 async function composer() {
-  taskHeader(
+  console.log( taskHeader(
     '3/5',
     'QA',
     'Lint',
     'composer.json'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'composer validate' );
@@ -105,12 +107,12 @@ async function composer() {
  *   A stream - to signal task completion
  */
 function css() {
-  taskHeader(
+  console.log( taskHeader(
     '1/5',
     'QA',
     'Lint',
     'CSS'
-  );
+  ) );
 
   return src( sources.scss, { allowEmpty: true } )
     .pipe( sassLint() )
@@ -127,12 +129,12 @@ function css() {
  *   A stream - to signal task completion
  */
 function js() {
-  taskHeader(
+  console.log( taskHeader(
     '2/5',
     'QA',
     'Lint',
     'JavaScript'
-  );
+  ) );
 
   // return stream or promise for run-sequence
   return src( sources.js, { allowEmpty: true } )
@@ -143,12 +145,12 @@ function js() {
       } = result;
       const { length: messageCount } = messages;
 
-      decorateLog( {
+      console.log( decorateLog( color, log, {
         textstring,
         messageCount,
         warningCount,
         errorCount
-      } );
+      } ) );
     } ) )
     .pipe( eslint.format() );
   // .pipe(eslint.failAfterError());
@@ -172,12 +174,12 @@ function js() {
  *   A stream - to signal task completion
  */
 function php( cb ) {
-  taskHeader(
+  console.log( taskHeader(
     '5/5',
     'QA',
     'Lint',
     'PHP'
-  );
+  ) );
 
   if ( !Object.keys( phpCsXmlRule ).length ) {
     console.log( 'phpCsXmlRule is empty.' );
@@ -224,12 +226,12 @@ function php( cb ) {
  *   A stream - to signal task completion
  */
 function phpCsExclusions( cb ) {
-  taskHeader(
+  console.log( taskHeader(
     '4/5',
     'QA',
     'Lint',
     'Load PHPCS ruleset'
-  );
+  ) );
 
   let errorMessage = false;
 

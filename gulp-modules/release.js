@@ -15,8 +15,8 @@ const zip = require( 'gulp-zip' );
 const { dest, series, src } = gulp;
 
 // internal modules
-const env = require( './env' );
-const taskHeader = require( './task-header' );
+const env = require( './helpers/env' );
+const taskHeader = require( './helpers/task-header' );
 const {
   BITBUCKET_TAG,
   PACKAGE_NAME,
@@ -255,11 +255,11 @@ const targets = {
  *   A stream - to signal task completion
  */
 function cleanUp() {
-  taskHeader(
+  console.log( taskHeader(
     '5/5',
     'Release',
     'Clean up'
-  );
+  ) );
 
   return del( [ `./${targets.zipSource}` ] );
 }
@@ -273,12 +273,12 @@ function cleanUp() {
  * - <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
  */
 async function composer() {
-  taskHeader(
+  console.log( taskHeader(
     '1/5',
     'Release',
     'Uninstall dev dependencies',
     'Composer (PHP)'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
@@ -298,12 +298,12 @@ async function composer() {
  *   A stream - to signal task completion
  */
 function copy() {
-  taskHeader(
+  console.log( taskHeader(
     '3/5',
     'Release',
     'Copy files',
     'To temporary folder'
-  );
+  ) );
 
   const getReleaseFiles = () => {
     let files = [];
@@ -333,12 +333,12 @@ function copy() {
  *   A stream - to signal task completion
  */
 async function yarn() {
-  taskHeader(
+  console.log( taskHeader(
     '2/5',
     'Release',
     'Uninstall dev dependencies',
     'Yarn'
-  );
+  ) );
 
   try {
     const { stdout, stderr } = await execa.commandSync( 'yarn install --non-interactive --production' );
@@ -358,12 +358,12 @@ async function yarn() {
  *   A stream - to signal task completion
  */
 function zipFiles() {
-  taskHeader(
+  console.log( taskHeader(
     '4/5',
     'Release',
     'Generate',
     'Zip file'
-  );
+  ) );
 
   let releaseTag = '';
 
