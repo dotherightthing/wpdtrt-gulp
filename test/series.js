@@ -1,9 +1,7 @@
 /**
- * File: test/tests.js
- * Topic: DTRT Gulp
+ * File: test/macro.js
  *
- * Unit tests for wpdtrt-gulp utility.
- * Written in Mocha, with Chai assertions.
+ * Test gulp series macros
  *
  * Note:
  * - Tests are run in project root
@@ -30,7 +28,7 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'Task', function () {
+describe( 'series', function () {
   this.timeout( 120000 );
 
   describe( 'build', function () {

@@ -151,13 +151,13 @@ async function wpUnit() {
 
   const dbName = `${pluginNameSafe}_wpunit_${Date.now()}`;
   const wpVersion = 'latest';
-  let installerPath = 'bin/';
+  let installerPath = '';
 
   if ( WORDPRESS_PLUGIN_BOILERPLATE_PATH.length ) {
-    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}bin/`;
+    installerPath = `${WORDPRESS_PLUGIN_BOILERPLATE_PATH}`;
   }
 
-  const shellScript = `${installerPath}install-wp-tests.sh`;
+  const shellScript = `${installerPath}bin/install-wp-tests.sh`;
 
   if ( !fs.existsSync( shellScript ) ) {
     console.log( `${shellScript} does not exist.` );
