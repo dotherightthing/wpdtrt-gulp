@@ -74,7 +74,7 @@
     "mocha": "^6.2.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --recursive \"./test/**/*.spec.js\" --full-trace"
   },
   "repository": {
     "type": "git",

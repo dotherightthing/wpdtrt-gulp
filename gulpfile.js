@@ -44,14 +44,14 @@ const { series } = gulp;
  */
 const env = require( './gulp-modules/helpers/env' );
 const { TRAVIS } = env;
-const compile = require( './gulp-modules/compile' );
-const dependencies = require( './gulp-modules/dependencies' );
-const documentation = require( './gulp-modules/documentation' );
-const lint = require( './gulp-modules/lint' );
-const release = require( './gulp-modules/release' );
-const test = require( './gulp-modules/test' );
-const version = require( './gulp-modules/version' );
-const watch = require( './gulp-modules/watch' );
+const compile = require( './gulp-modules/series/compile' );
+const dependencies = require( './gulp-modules/series/dependencies' );
+const documentation = require( './gulp-modules/series/documentation' );
+const lint = require( './gulp-modules/series/lint' );
+const release = require( './gulp-modules/series/release' );
+const test = require( './gulp-modules/series/test' );
+const version = require( './gulp-modules/series/version' );
+const watch = require( './gulp-modules/series/watch' );
 
 /**
  * Define combination build tasks
