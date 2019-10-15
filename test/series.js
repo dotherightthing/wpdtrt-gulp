@@ -64,7 +64,7 @@ describe( 'series', function () {
   } );
 
   describe( 'lint', function () {
-    it( 'runs without error', mochaAsync(async function() {
+    it.only( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
