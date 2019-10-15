@@ -42,16 +42,16 @@ const { series } = gulp;
 /**
  * Import internal task modules
  */
-const env = require( './gulp-modules/helpers/env' );
+const env = require( './helpers/env' );
 const { TRAVIS } = env;
-const compile = require( './gulp-modules/series/compile' );
-const dependencies = require( './gulp-modules/series/dependencies' );
-const documentation = require( './gulp-modules/series/documentation' );
-const lint = require( './gulp-modules/series/lint' );
-const release = require( './gulp-modules/series/release' );
-const test = require( './gulp-modules/series/test' );
-const version = require( './gulp-modules/series/version' );
-const watch = require( './gulp-modules/series/watch' );
+const compile = require( './series/compile' );
+const dependencies = require( './series/dependencies' );
+const documentation = require( './series/documentation' );
+const lint = require( './series/lint' );
+const release = require( './series/release' );
+const test = require( './series/test' );
+const version = require( './series/version' );
+const watch = require( './series/watch' );
 
 /**
  * Define combination build tasks

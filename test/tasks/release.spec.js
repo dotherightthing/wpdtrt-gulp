@@ -19,11 +19,11 @@ const execa = require( 'execa' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-const cleanUp = require( '../../gulp-modules/tasks/release/cleanUp' );
-const composer = require( '../../gulp-modules/tasks/release/composer' );
-const copy = require( '../../gulp-modules/tasks/release/copy' );
-const yarn = require( '../../gulp-modules/tasks/release/yarn' );
-const zipFiles = require( '../../gulp-modules/tasks/release/zipFiles' );
+const cleanUp = require( '../../tasks/release/cleanUp' );
+const composer = require( '../../tasks/release/composer' );
+const copy = require( '../../tasks/release/copy' );
+const yarn = require( '../../tasks/release/yarn' );
+const zipFiles = require( '../../tasks/release/zipFiles' );
 
 // https://labs.chiedo.com/post/async-mocha-tests/
 const mochaAsync = (fn) => {

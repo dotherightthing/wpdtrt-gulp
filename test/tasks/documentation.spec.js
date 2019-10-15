@@ -19,7 +19,7 @@ const execa = require( 'execa' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-const naturalDocs = require( '../../gulp-modules/tasks/documentation/naturalDocs' );
+const naturalDocs = require( '../../tasks/documentation/naturalDocs' );
 
 // https://labs.chiedo.com/post/async-mocha-tests/
 const mochaAsync = (fn) => {

@@ -19,8 +19,8 @@ const execa = require( 'execa' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-const cypressIo = require( '../../gulp-modules/tasks/test/cypressIo' );
-const wpUnit = require( '../../gulp-modules/tasks/test/wpUnit' );
+const cypressIo = require( '../../tasks/test/cypressIo' );
+const wpUnit = require( '../../tasks/test/wpUnit' );
 
 // https://labs.chiedo.com/post/async-mocha-tests/
 const mochaAsync = (fn) => {

@@ -18,7 +18,7 @@
       }
     },
     {
-      "files": ["gulpfile.babel.js", "test/*.js", "gulp-modules/*.js"],
+      "files": ["gulpfile.babel.js", "test/*.js", "*.js"],
       "rules": {
         "no-console": "off"
       }

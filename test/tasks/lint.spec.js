@@ -19,10 +19,10 @@ const execa = require( 'execa' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-const composer = require( '../../gulp-modules/tasks/lint/composer' );
-const css = require( '../../gulp-modules/tasks/lint/css' );
-const js = require( '../../gulp-modules/tasks/lint/js' );
-const php = require( '../../gulp-modules/tasks/lint/php' );
+const composer = require( '../../tasks/lint/composer' );
+const css = require( '../../tasks/lint/css' );
+const js = require( '../../tasks/lint/js' );
+const php = require( '../../tasks/lint/php' );
 
 // https://labs.chiedo.com/post/async-mocha-tests/
 const mochaAsync = (fn) => {
