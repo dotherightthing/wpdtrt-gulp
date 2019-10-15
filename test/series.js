@@ -33,7 +33,7 @@ describe( 'series', function () {
 
   describe( 'build', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -41,7 +41,7 @@ describe( 'series', function () {
 
   describe( 'compile', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -49,7 +49,7 @@ describe( 'series', function () {
 
   describe( 'dependencies', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp dependencies --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout, stderr );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -57,7 +57,7 @@ describe( 'series', function () {
 
   describe( 'documentation', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp documentation --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -65,7 +65,7 @@ describe( 'series', function () {
 
   describe( 'lint', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp lint --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -73,7 +73,7 @@ describe( 'series', function () {
 
   describe( 'release', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp release --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -81,7 +81,7 @@ describe( 'series', function () {
 
   describe( 'test', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp test --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
@@ -89,7 +89,7 @@ describe( 'series', function () {
 
   describe( 'version', function () {
     it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile-loader.js --cwd ./test/fixtures/theme' );
+      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp version --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
       console.log( stdout );
       expect( stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );

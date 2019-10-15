@@ -1,5 +1,5 @@
 /**
- * File: gulpfile.babel.js
+ * File: gulpfile.js
  *
  * Functions exported from this file
  * can be run as Gulp tasks.
@@ -79,10 +79,9 @@ const buildDev = series(
 /**
  * Fix #1 for: "Task never defined: lint"
  *
- * Expose the public tasks to gulpfile-loader.js
+ * Expose the public tasks.
  *
  * See:
- * - Fix #2 in ./gulpfile-loader.js
  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
 module.exports = {
@@ -90,6 +89,7 @@ module.exports = {
   buildTravis,
   compile,
   dependencies,
+  default: ( TRAVIS ? buildTravis : buildDev ),
   documentation,
   lint,
   release,
