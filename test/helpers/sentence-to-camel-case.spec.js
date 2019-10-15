@@ -1,9 +1,7 @@
 /**
- * File: test/sentence-to-camel-case.js
- * Topic: DTRT Gulp
+ * File: test/helpers/sentence-to-camel-case.spec.js
  *
- * Unit tests for wpdtrt-gulp utility.
- * Written in Mocha, with Chai assertions.
+ * Test gulp tasks.
  *
  * Note:
  * - Tests are run in project root

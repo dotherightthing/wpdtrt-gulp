@@ -11,7 +11,7 @@ const taskHeader = require( '../../helpers/task-header' );
 /**
  * Function: wpUnit
  *
- * Run WPUnit tests
+ * Run WordPress unit tests
  *
  * See:
  * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>

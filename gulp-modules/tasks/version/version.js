@@ -91,11 +91,11 @@ function replaceVersions( cb ) {
 /**
  * Function: updateDependencies
  *
- * Update the boilerplate dependency to the updateDependencies version.
+ * Update the boilerplate dependency to the latest version.
  *
  * Note:
  * - If wpdtrt-plugin-boilerplate is loaded as a dependency,
- *   get the updateDependencies release of wpdtrt-plugin-boilerplate.
+ *   get the latest release of wpdtrt-plugin-boilerplate.
  * - This has to run before replaceVersions,
  *   so that the correct version information is available
  *
