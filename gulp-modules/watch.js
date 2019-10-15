@@ -42,7 +42,6 @@ const sources = {
  */
 function devWatch() {
   console.log( taskHeader(
-    '1/1',
     'Watch',
     'Compile',
     'JS & SCSS'

@@ -34,7 +34,6 @@ const {
  */
 async function cypressIo() {
   console.log( taskHeader(
-    '1/2',
     'QA',
     'Tests',
     'Cypress'
@@ -66,7 +65,6 @@ async function cypressIo() {
  */
 async function wpUnit() {
   console.log( taskHeader(
-    '2/2',
     'QA',
     'Tests',
     'WPUnit'

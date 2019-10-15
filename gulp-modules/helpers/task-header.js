@@ -28,10 +28,8 @@ const taskHeader = (
 ) => {
   let str = '';
   str += '\n';
-  str += '========================================\n';
-  str += `${taskCategory} step ${step}:\n`;
-  str += `=> ${taskAction}: ${taskDetail}\n`;
-  str += '----------------------------------------\n';
+  str += `=> ${taskCategory}: ${taskAction} - ${taskDetail}\n`;
+  str += '\n';
 
   return str;
 }

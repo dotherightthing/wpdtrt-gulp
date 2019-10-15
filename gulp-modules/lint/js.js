@@ -57,7 +57,6 @@ if ( WORDPRESS_CHILD_THEME || WORDPRESS_PARENT_THEME ) {
  */
 function js() {
   console.log( taskHeader(
-    '2/5',
     'QA',
     'Lint',
     'JavaScript'

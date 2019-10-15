@@ -27,7 +27,6 @@ const sources = {
  */
 function css() {
   console.log( taskHeader(
-    '1/5',
     'QA',
     'Lint',
     'CSS'

@@ -39,7 +39,6 @@ const {
  */
 async function autoloadUpdatedDependencies() {
   console.log( taskHeader(
-    '3/3',
     'Version',
     'Generate',
     'List of classes to be autoloaded'
@@ -67,7 +66,6 @@ async function autoloadUpdatedDependencies() {
  */
 function replaceVersions( cb ) {
   console.log( taskHeader(
-    '2/3',
     'Version',
     'Bump',
     'Replace version strings'
@@ -106,7 +104,6 @@ function replaceVersions( cb ) {
  */
 async function updateDependencies() {
   console.log( taskHeader(
-    '1/3',
     'Version',
     'Bump',
     'Update Composer dependencies'

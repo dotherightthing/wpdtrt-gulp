@@ -63,7 +63,6 @@ if ( WORDPRESS_CHILD_THEME || WORDPRESS_PARENT_THEME ) {
  */
 function php( cb ) {
   console.log( taskHeader(
-    '5/5',
     'QA',
     'Lint',
     'PHP'
@@ -115,7 +114,6 @@ function php( cb ) {
  */
 function phpCsExclusions( cb ) {
   console.log( taskHeader(
-    '4/5',
     'QA',
     'Lint',
     'Load PHPCS ruleset'

@@ -15,7 +15,6 @@ const taskHeader = require( '../helpers/task-header' );
  */
 async function composer() {
   console.log( taskHeader(
-    '3/5',
     'QA',
     'Lint',
     'composer.json'

@@ -28,7 +28,6 @@ const {
  */
 async function naturalDocs() {
   console.log( taskHeader(
-    '1/1',
     'Documentation',
     'Documentation',
     'Natural Docs (JS & PHP)'

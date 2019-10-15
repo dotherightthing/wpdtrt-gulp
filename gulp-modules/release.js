@@ -256,7 +256,6 @@ const targets = {
  */
 function cleanUp() {
   console.log( taskHeader(
-    '5/5',
     'Release',
     'Clean up'
   ) );
@@ -274,7 +273,6 @@ function cleanUp() {
  */
 async function composer() {
   console.log( taskHeader(
-    '1/5',
     'Release',
     'Uninstall dev dependencies',
     'Composer (PHP)'
@@ -299,7 +297,6 @@ async function composer() {
  */
 function copy() {
   console.log( taskHeader(
-    '3/5',
     'Release',
     'Copy files',
     'To temporary folder'
@@ -334,7 +331,6 @@ function copy() {
  */
 async function yarn() {
   console.log( taskHeader(
-    '2/5',
     'Release',
     'Uninstall dev dependencies',
     'Yarn'
@@ -359,7 +355,6 @@ async function yarn() {
  */
 function zipFiles() {
   console.log( taskHeader(
-    '4/5',
     'Release',
     'Generate',
     'Zip file'

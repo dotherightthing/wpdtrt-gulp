@@ -60,7 +60,6 @@ const targets = {
  */
 function css() {
   console.log( taskHeader(
-    '1/2',
     'Assets',
     'Compile',
     'SCSS -> CSS'
@@ -121,7 +120,6 @@ function css() {
  */
 function js() {
   console.log( taskHeader(
-    '2/2',
     'Assets',
     'Transpile',
     'ES6+ JS -> ES5 JS'

@@ -51,7 +51,6 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
  */
 async function composer() {
   console.log( taskHeader(
-    '3/5',
     'Dependencies',
     'Install',
     'Composer (PHP)'
@@ -76,7 +75,6 @@ async function composer() {
  */
 function github( done ) {
   console.log( taskHeader(
-    '2/5',
     'Dependencies',
     'Install',
     'Check current Github API rate limit for automated installs'
@@ -111,7 +109,6 @@ function github( done ) {
  */
 function naturalDocs( done ) {
   console.log( taskHeader(
-    '4/5',
     'Dependencies',
     'Install',
     'Docs'
@@ -143,7 +140,6 @@ function naturalDocs( done ) {
  */
 async function wpUnit() {
   console.log( taskHeader(
-    '5/5',
     'Dependencies',
     'Install',
     'WP Unit'
@@ -180,7 +176,6 @@ async function wpUnit() {
  */
 async function yarn() {
   console.log( taskHeader(
-    '1/5',
     'Dependencies',
     'Install',
     'Yarn'
