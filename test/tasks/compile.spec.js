@@ -21,13 +21,29 @@ const fs = require( 'fs' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
 
-// https://labs.chiedo.com/post/async-mocha-tests/
-const mochaAsync = (fn) => {
-  return done => {
-    fn.call().then(done, err => {
-      done(err);
-    });
-  };
+/**
+ * function: shellCommand
+ *
+ * Run a shell command.
+ *
+ * Parameters:
+ *   command - the command to run (string)
+ *
+ * Returns:
+ *   err - the error (string)
+ */
+const shellCommand = async ( command ) => {
+  let err = '';
+
+  try {
+    await execa.commandSync( command, { shell: true } );
+    // const { stdout } = await execa.commandSync( command, { shell: true } );
+    // console.log( stdout );
+  } catch ( error ) {
+    err = error.stderr;
+  }
+
+  return err;
 };
 
 describe.only( 'compile', function () {
@@ -44,47 +60,25 @@ describe.only( 'compile', function () {
       await del( `${theme}/${scssFolder}/_wpdtrt-import.scss` );
     } );
 
-    describe( 'series', async function () {
-      it( 'runs without error', mochaAsync(async function() {
-        let err = '';
-
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-          err = error.stderr;
-        }
-
+    describe( 'series', function () {
+      it( 'runs without error', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
-      } ) );
+      } );
     } );
 
     describe( 'css', async function () {
-      it( 'compiles scss files into css', mochaAsync(async function() {
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-        }
-
+      it( 'compiles scss files into css', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
-      } ) );
+      } );
 
-      it( 'generates _wpdtrt-import.scss', mochaAsync(async function() {
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-        }
-
+      it( 'generates _wpdtrt-import.scss', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( true );
-      } ) );
+      } );
     } );
   } );
 
@@ -97,53 +91,31 @@ describe.only( 'compile', function () {
     } );
 
     describe( 'series', async function () {
-      it( 'runs without error', mochaAsync(async function() {
-        let err = '';
-
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-          err = error.stderr;
-        }
-
+      it( 'runs without error', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
-      } ) );
+      } );
     } );
 
     describe( 'css', async function () {
-      it( 'compiles scss files into css', mochaAsync(async function() {
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-        }
-
+      it( 'compiles scss files into css', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
-      } ) );
+      } );
 
-      it( 'does not generate _wpdtrt-import.scss', mochaAsync(async function() {
-        try {
-          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
-          // console.log( stdout );
-          // console.log( stderr );
-        } catch ( error ) {
-          console.error ( error.stderr );
-        }
-
+      it( 'does not generate _wpdtrt-import.scss', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( false );
-      } ) );
+      } );
     } );
   } );
 
   describe( 'js', function () {
-    it.skip( 'transpiles ES6 JS files into ES5', mochaAsync(async function() {
+    it.skip( 'transpiles ES6 JS files into ES5', async function() {
       // TODO
       expect( error.stderr.replace( /\n$/, '') ).to.equal( '' );
-    } ) );
+    } );
   } );
 } );
