@@ -52,11 +52,11 @@ const compileCss = require( '../../../tasks/compile/css' );
 const compileCssWpdtrtDynamicImport = require( '../../../tasks/compile/css-wpdtrt-dynamic-import' );
 const compileJs = require( '../../../tasks/compile/js' );
 
-const dependenciesComposer = require( '../tasks/dependencies/composer' );
-const dependenciesGithub = require( '../tasks/dependencies/github' );
-const dependenciesNaturalDocs = require( '../tasks/dependencies/naturalDocs' );
-const dependenciesWpUnit = require( '../tasks/dependencies/wpUnit' );
-const dependenciesYarn = require( '../tasks/dependencies/yarn' );
+const dependenciesComposer = require( '../../../tasks/dependencies/composer' );
+const dependenciesGithub = require( '../../../tasks/dependencies/github' );
+const dependenciesNaturalDocs = require( '../../../tasks/dependencies/naturalDocs' );
+const dependenciesWpUnit = require( '../../../tasks/dependencies/wpUnit' );
+const dependenciesYarn = require( '../../../tasks/dependencies/yarn' );
 
 const documentation = require( '../../../series/documentation' );
 const lint = require( '../../../series/lint' );
@@ -102,7 +102,7 @@ const defaultSeries = () => {
 
   if ( TRAVIS ) {
     tasks = series(
-      dependencies,
+      dependenciesSeries(),
       lint,
       compile,
       version,
@@ -112,7 +112,7 @@ const defaultSeries = () => {
     );
   } else {
     tasks = series(
-      dependencies,
+      dependenciesSeries(),
       lint,
       compile,
       version,
@@ -173,6 +173,7 @@ module.exports = {
   compileCss, // for testing
   compileJs, // for testing
   dependencies: dependenciesSeries(),
+  dependenciesComposer, // for testing
   dependenciesGithub, // for testing
   dependenciesNaturalDocs, // for testing
   dependenciesWpUnit, // for testing
