@@ -47,10 +47,17 @@ const { parallel, series } = gulp;
  * - Integrated path: ./node_modules/wpdtrt-gulp/
  */
 const env = require( '../../../helpers/env' );
+
 const compileCss = require( '../../../tasks/compile/css' );
 const compileCssWpdtrtDynamicImport = require( '../../../tasks/compile/css-wpdtrt-dynamic-import' );
 const compileJs = require( '../../../tasks/compile/js' );
-const dependencies = require( '../../../series/dependencies' );
+
+const dependenciesComposer = require( '../tasks/dependencies/composer' );
+const dependenciesGithub = require( '../tasks/dependencies/github' );
+const dependenciesNaturalDocs = require( '../tasks/dependencies/naturalDocs' );
+const dependenciesWpUnit = require( '../tasks/dependencies/wpUnit' );
+const dependenciesYarn = require( '../tasks/dependencies/yarn' );
+
 const documentation = require( '../../../series/documentation' );
 const lint = require( '../../../series/lint' );
 const release = require( '../../../series/release' );
@@ -58,6 +65,8 @@ const test = require( '../../../series/test' );
 const version = require( '../../../series/version' );
 
 const {
+  CI,
+  TAGGED_RELEASE,
   TRAVIS
 } = env;
 
@@ -83,16 +92,16 @@ const watch = () => {
 }
 
 /**
- * Function: getDefault
+ * Function: defaultSeries
  *
  * Returns:
- *   defaultTask - The default task
+ *   tasks - The default tasks
  */
-const getDefaultTask = () => {
-  let defaultTask;
+const defaultSeries = () => {
+  let tasks;
 
   if ( TRAVIS ) {
-    defaultTask = series(
+    tasks = series(
       dependencies,
       lint,
       compile,
@@ -102,7 +111,7 @@ const getDefaultTask = () => {
       release
     );
   } else {
-    defaultTask = series(
+    tasks = series(
       dependencies,
       lint,
       compile,
@@ -112,7 +121,41 @@ const getDefaultTask = () => {
     );
   }
 
-  return defaultTask;
+  return tasks;
+};
+
+/**
+ * Function: dependenciesSeries
+ *
+ * Returns:
+ *   tasks - The dependencies tasks
+ */
+const dependenciesSeries = () => {
+  let tasks;
+
+  if ( TRAVIS && TAGGED_RELEASE ) {
+    tasks = series(
+      dependenciesYarn,
+      dependenciesGithub,
+      dependenciesNaturalDocs,
+      dependenciesWpUnit
+    );
+  } else if ( CI ) {
+    tasks = series(
+      dependenciesYarn,
+      dependenciesGithub,
+      dependenciesWpUnit
+    );
+  } else {
+    tasks = series(
+      dependenciesYarn,
+      dependenciesComposer,
+      dependenciesNaturalDocs,
+      dependenciesWpUnit
+    );
+  }
+
+  return tasks;
 };
 
 /**
@@ -124,12 +167,16 @@ const getDefaultTask = () => {
  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
 module.exports = {
-  default: getDefaultTask(),
+  default: defaultSeries(),
   compile,
   compileCssWpdtrtDynamicImport, // for testing
   compileCss, // for testing
   compileJs, // for testing
-  dependencies,
+  dependencies: dependenciesSeries(),
+  dependenciesGithub, // for testing
+  dependenciesNaturalDocs, // for testing
+  dependenciesWpUnit, // for testing
+  dependenciesYarn, // for testing
   documentation,
   lint,
   release,
