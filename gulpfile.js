@@ -46,6 +46,7 @@ const env = require( './helpers/env' );
 const { TRAVIS } = env;
 const compile = require( './series/compile' );
 const compileCss = require( './tasks/compile/css' );
+const compileJs = require( './tasks/compile/js' );
 const dependencies = require( './series/dependencies' );
 const documentation = require( './series/documentation' );
 const lint = require( './series/lint' );
@@ -90,6 +91,7 @@ module.exports = {
   buildTravis,
   compile,
   compileCss,
+  compileJs,
   dependencies,
   default: ( TRAVIS ? buildTravis : buildDev ),
   documentation,
