@@ -30,7 +30,7 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'version', function () {
+describe.skip( 'version', function () {
   this.timeout( 120000 );
 
   describe( 'series', function () {

@@ -34,7 +34,7 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'dependencies', function () {
+describe.skip( 'dependencies', function () {
   this.timeout( 120000 );
 
   describe( 'series', function () {

@@ -33,7 +33,7 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'documentation', function () {
+describe.skip( 'lint', function () {
   this.timeout( 120000 );
 
   describe( 'series', function () {
