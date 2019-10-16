@@ -73,7 +73,7 @@ describe( 'compile', function () {
       } );
     } );
 
-    describe( 'css', async function () {
+    describe( 'css', function () {
       it( 'generates _wpdtrt-import.scss', async function() {
         const err = await shellCommand( `./node_modules/.bin/gulp compileCssWpdtrtDynamicImport --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
