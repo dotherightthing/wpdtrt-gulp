@@ -15,13 +15,11 @@
  * Displays a block comment for each task that runs.
  *
  * Parameters:
- *   (string) step - Step number
  *   (string) taskCategory - Task category
  *   (string) taskAction - Task action
  *   (string) taskDetail - Task detail
  */
 const taskHeader = (
-  step = '1/1',
   taskCategory = '',
   taskAction = '',
   taskDetail = ''

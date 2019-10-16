@@ -31,7 +31,7 @@ function naturalDocs( done ) {
   console.log( taskHeader(
     'Dependencies',
     'Install',
-    'Docs'
+    'Natural Docs'
   ) );
 
   const getNaturalDocs = () => {
