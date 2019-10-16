@@ -46,7 +46,7 @@ const shellCommand = async ( command ) => {
  * Group: Compile
  * _____________________________________
  */
-describe.only( 'compile', function () {
+describe( 'compile', function () {
   this.timeout( 120000 );
 
   const cssFolder = 'css';
@@ -112,48 +112,6 @@ describe.only( 'compile', function () {
     beforeEach ( 'clean up test files', async function() {
       await del( `${theme}/${cssFolder}` );
       await del( `${theme}/${jsFolder}/*-es5.js` );
-      await del( `${theme}/${scssFolder}/_wpdtrt-import.scss` );
-    } );
-
-    describe( 'series', async function () {
-      it( 'runs without error', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compile --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-      } );
-    } );
-
-    describe( 'css', async function () {
-      it( 'compiles scss files into css', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-        expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
-      } );
-    } );
-
-    describe( 'js', function () {
-      it( 'transpiles frontend.js to ES5', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compileJs --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-        expect( fs.existsSync( `${process.cwd()}/${theme}/${jsFolder}/frontend-es5.js` ) ).to.equal( true );
-      } );
-
-      it( 'transpiles backend.js to ES5', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compileJs --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-        expect( fs.existsSync( `${process.cwd()}/${theme}/${jsFolder}/backend-es5.js` ) ).to.equal( true );
-      } );
-    } );
-
-  /**
-   * Group: WordPress Plugin
-   * _____________________________________
-   */
-  describe( 'wordpress-plugin', function () {
-    const theme = './test/fixtures/wordpress-plugin';
-
-    beforeEach ( 'clean up test files', async function() {
-      await del( `${theme}/${cssFolder}` );
-      await del( `${theme}/${jsFolder}/*-es5.js` );
     } );
 
     describe( 'series', function () {
@@ -163,7 +121,7 @@ describe.only( 'compile', function () {
       } );
     } );
 
-    describe( 'css', async function () {
+    describe( 'css', function () {
       it( 'compiles scss files into css', async function() {
         const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
@@ -185,5 +143,61 @@ describe.only( 'compile', function () {
       } );
     } );
   } );
+
+  /**
+   * Group: WordPress Plugin
+   * _____________________________________
+   */
+  describe( 'wordpress-plugin', function () {
+    const theme = './test/fixtures/wordpress-plugin';
+
+    beforeEach ( 'clean up test files', async function() {
+      await del( `${theme}/${cssFolder}` );
+      await del( `${theme}/${jsFolder}/*-es5.js` );
+    } );
+
+    describe( 'series', function () {
+      it( 'runs without error', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compile --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+      } );
+    } );
+
+    describe( 'css', function () {
+      it( 'compiles scss files into css', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
+      } );
+    } );
+
+    describe( 'js', function () {
+      it( 'transpiles frontend.js to ES5', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileJs --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${jsFolder}/frontend-es5.js` ) ).to.equal( true );
+      } );
+
+      it( 'transpiles backend.js to ES5', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileJs --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${jsFolder}/backend-es5.js` ) ).to.equal( true );
+      } );
+    } );
+  } );
+
+  /**
+   * Group: WordPress Parent Theme
+   * _____________________________________
+   */
+  describe( 'wordpress-plugin-boilerplate', function () {
+    const theme = './test/fixtures/wordpress-plugin-boilerplate';
+
+    beforeEach ( 'clean up test files', async function() {
+      await del( `${theme}/${cssFolder}` );
+      await del( `${theme}/${jsFolder}/*-es5.js` );
+    } );
+
+    // it does not compile
   } );
 } );
