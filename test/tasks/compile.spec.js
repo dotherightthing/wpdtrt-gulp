@@ -74,16 +74,16 @@ describe.only( 'compile', function () {
     } );
 
     describe( 'css', async function () {
+      it( 'generates _wpdtrt-import.scss', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp compileCssWpdtrtDynamicImport --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( true );
+      } );
+
       it( 'compiles scss files into css', async function() {
         const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
-      } );
-
-      it( 'generates _wpdtrt-import.scss', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-        expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( true );
       } );
     } );
 
@@ -127,12 +127,6 @@ describe.only( 'compile', function () {
         const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
         expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
-      } );
-
-      it( 'does not generate _wpdtrt-import.scss', async function() {
-        const err = await shellCommand( `./node_modules/.bin/gulp compileCss --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
-        expect( err.replace( /\n$/, '') ).to.equal( '' );
-        expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( false );
       } );
     } );
 

@@ -49,6 +49,7 @@ const { series } = gulp;
 const env = require( '../../../helpers/env' );
 const compile = require( '../../../series/compile' );
 const compileCss = require( '../../../tasks/compile/css' );
+const compileCssWpdtrtDynamicImport = require( '../../../tasks/compile/css-wpdtrt-dynamic-import' );
 const compileJs = require( '../../../tasks/compile/js' );
 const dependencies = require( '../../../series/dependencies' );
 const documentation = require( '../../../series/documentation' );

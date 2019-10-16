@@ -4,7 +4,6 @@
  * Gulp tasks to compile code.
  */
 const autoprefixer = require( 'autoprefixer' );
-const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const postcss = require( 'gulp-postcss' );
 const pxtorem = require( 'postcss-pxtorem' );
@@ -13,12 +12,7 @@ const sass = require( 'gulp-sass' );
 const { dest, src } = gulp;
 
 // internal modules
-const env = require( '../../helpers/env' );
 const taskHeader = require( '../../helpers/task-header' );
-const {
-  CI,
-  WORDPRESS_CHILD_THEME,
-} = env;
 
 // constants
 const sources = {
@@ -39,7 +33,7 @@ const targets = {
  * Returns:
  *   A stream - to signal task completion
  */
-function css( done ) {
+const css = ( done ) => {
   console.log( taskHeader(
     'Assets',
     'Compile',
@@ -77,18 +71,10 @@ function css( done ) {
     } )
   ];
 
-  // if child theme
-  if ( WORDPRESS_CHILD_THEME ) {
-    const suffix = CI ? 'ci' : 'wp';
-
-    // generate an importer file
-    fs.writeFileSync( 'scss/_wpdtrt-import.scss', `@import "wpdtrt/dependencies-${suffix}";\r\n` );
-  }
-
   src( sources.scss, { allowEmpty: true } )
-  .pipe( sass( { outputStyle: 'expanded' } ) )
-  .pipe( postcss( processors ) )
-  .pipe( dest( targets.css ) );
+    .pipe( sass( { outputStyle: 'expanded' } ) )
+    .pipe( postcss( processors ) )
+    .pipe( dest( targets.css ) );
 
   done();
 }
