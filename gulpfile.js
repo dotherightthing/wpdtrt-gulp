@@ -45,6 +45,7 @@ const { series } = gulp;
 const env = require( './helpers/env' );
 const { TRAVIS } = env;
 const compile = require( './series/compile' );
+const compileCss = require( './tasks/compile/css' );
 const dependencies = require( './series/dependencies' );
 const documentation = require( './series/documentation' );
 const lint = require( './series/lint' );
@@ -88,6 +89,7 @@ module.exports = {
   buildDev,
   buildTravis,
   compile,
+  compileCss,
   dependencies,
   default: ( TRAVIS ? buildTravis : buildDev ),
   documentation,

@@ -39,7 +39,7 @@ const targets = {
  * Returns:
  *   A stream - to signal task completion
  */
-function css() {
+function css( done ) {
   console.log( taskHeader(
     'Assets',
     'Compile',
@@ -85,10 +85,12 @@ function css() {
     fs.writeFileSync( 'scss/_wpdtrt-import.scss', `@import "wpdtrt/dependencies-${suffix}";\r\n` );
   }
 
-  return src( sources.scss, { allowEmpty: true } )
-    .pipe( sass( { outputStyle: 'expanded' } ) )
-    .pipe( postcss( processors ) )
-    .pipe( dest( targets.css ) );
+  src( sources.scss, { allowEmpty: true } )
+  .pipe( sass( { outputStyle: 'expanded' } ) )
+  .pipe( postcss( processors ) )
+  .pipe( dest( targets.css ) );
+
+  done();
 }
 
 module.exports = css;

@@ -15,12 +15,11 @@
 
 const chai = require( 'chai' );
 const { expect } = chai;
+const del = require( 'del' );
 const execa = require( 'execa' );
+const fs = require( 'fs' );
 const mocha = require( 'mocha' );
 const { describe, it } = mocha; // fix eslint no-undef errors
-
-const css = require( '../../tasks/compile/css' );
-const js = require( '../../tasks/compile/js' );
 
 // https://labs.chiedo.com/post/async-mocha-tests/
 const mochaAsync = (fn) => {
@@ -34,6 +33,14 @@ const mochaAsync = (fn) => {
 describe( 'compile', function () {
   this.timeout( 120000 );
 
+  const expectedFolder = './test/fixtures/theme/css';
+  const expectedFile = './test/fixtures/theme/css/theme.css';
+
+  before ( async function() {
+    // runs before all tests in this block
+    await del( expectedFolder );
+  } );
+
   describe( 'series', function () {
     it( 'runs without error', mochaAsync(async function() {
       const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
@@ -42,10 +49,17 @@ describe( 'compile', function () {
     } ) );
   } );
 
-  describe( 'css', function () {
-    it.skip( 'compiles scss files into css', mochaAsync(async function() {
-      // TODO
-      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
+  describe( 'css', async function () {
+    it.only( 'compiles scss files into css', mochaAsync(async function() {
+      try {
+        const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
+        console.log( stdout );
+        console.log( stderr );
+      } catch ( error ) {
+        console.error ( error.stderr );
+      }
+
+      expect( fs.existsSync( `${process.cwd()}/${expectedFile}` ) ).to.equal( true );
     } ) );
   } );
 
