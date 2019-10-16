@@ -30,43 +30,120 @@ const mochaAsync = (fn) => {
   };
 };
 
-describe( 'compile', function () {
+describe.only( 'compile', function () {
   this.timeout( 120000 );
 
-  const expectedFolder = './test/fixtures/theme/css';
-  const expectedFile = './test/fixtures/theme/css/theme.css';
+  const cssFolder = 'css';
+  const scssFolder = 'scss';
 
-  before ( async function() {
-    // runs before all tests in this block
-    await del( expectedFolder );
+  describe( 'wordpress-child-theme', function () {
+    const theme = './test/fixtures/wordpress-child-theme';
+
+    beforeEach ( 'clean up test files', async function() {
+      await del( `${theme}/${cssFolder}` );
+      await del( `${theme}/${scssFolder}/_wpdtrt-import.scss` );
+    } );
+
+    describe( 'series', async function () {
+      it( 'runs without error', mochaAsync(async function() {
+        let err = '';
+
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+          err = error.stderr;
+        }
+
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+      } ) );
+    } );
+
+    describe( 'css', async function () {
+      it( 'compiles scss files into css', mochaAsync(async function() {
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+        }
+
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
+      } ) );
+
+      it( 'generates _wpdtrt-import.scss', mochaAsync(async function() {
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+        }
+
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( true );
+      } ) );
+    } );
   } );
 
-  describe( 'series', function () {
-    it( 'runs without error', mochaAsync(async function() {
-      const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
-      // console.log( stdout );
-      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
-    } ) );
-  } );
+  describe( 'wordpress-parent-theme', function () {
+    const theme = './test/fixtures/wordpress-parent-theme';
 
-  describe( 'css', async function () {
-    it.only( 'compiles scss files into css', mochaAsync(async function() {
-      try {
-        const { stdout, stderr } = await execa.commandSync( './node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ./test/fixtures/theme' );
-        console.log( stdout );
-        console.log( stderr );
-      } catch ( error ) {
-        console.error ( error.stderr );
-      }
+    beforeEach ( 'clean up test files', async function() {
+      await del( `${theme}/${cssFolder}` );
+      await del( `${theme}/${scssFolder}/_wpdtrt-import.scss` );
+    } );
 
-      expect( fs.existsSync( `${process.cwd()}/${expectedFile}` ) ).to.equal( true );
-    } ) );
+    describe( 'series', async function () {
+      it( 'runs without error', mochaAsync(async function() {
+        let err = '';
+
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compile --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+          err = error.stderr;
+        }
+
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+      } ) );
+    } );
+
+    describe( 'css', async function () {
+      it( 'compiles scss files into css', mochaAsync(async function() {
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+        }
+
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${cssFolder}/theme.css` ) ).to.equal( true );
+      } ) );
+
+      it( 'does not generate _wpdtrt-import.scss', mochaAsync(async function() {
+        try {
+          const { stdout, stderr } = await execa.commandSync( `./node_modules/.bin/gulp compileCss --gulpfile ./gulpfile.js --cwd ${theme}` );
+          // console.log( stdout );
+          // console.log( stderr );
+        } catch ( error ) {
+          console.error ( error.stderr );
+        }
+
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${scssFolder}/_wpdtrt-import.scss` ) ).to.equal( false );
+      } ) );
+    } );
   } );
 
   describe( 'js', function () {
     it.skip( 'transpiles ES6 JS files into ES5', mochaAsync(async function() {
       // TODO
-      expect( stderr.replace( /\n$/, '') ).to.equal( '' );
+      expect( error.stderr.replace( /\n$/, '') ).to.equal( '' );
     } ) );
   } );
 } );
