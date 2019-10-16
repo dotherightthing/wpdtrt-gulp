@@ -1,0 +1,8 @@
+{
+    "name": "package-name",
+    "keywords": [
+        "wordpress-child-theme"
+    ],
+    "version": "0.1.0",
+    "license": "ISC"
+}
