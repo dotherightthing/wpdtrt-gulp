@@ -1,8 +1,9 @@
 *.code-workspace
 node_modules
 sandbox.js
-test/fixtures/theme/Natural Docs
 yarn.lock
-test/fixtures/theme/vendor
 release.zip
-test/fixtures/theme/css
+test/fixtures/**/css
+test/fixtures/**/js/*-es5.js
+test/fixtures/**/Natural Docs
+test/fixtures/**/vendor
