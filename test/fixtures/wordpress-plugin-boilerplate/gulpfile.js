@@ -48,11 +48,11 @@ const { series } = gulp;
  */
 const env = require( '../../../helpers/env' );
 
-const dependenciesComposer = require( '../tasks/dependencies/composer' );
-const dependenciesGithub = require( '../tasks/dependencies/github' );
-const dependenciesNaturalDocs = require( '../tasks/dependencies/naturalDocs' );
-const dependenciesWpUnit = require( '../tasks/dependencies/wpUnit' );
-const dependenciesYarn = require( '../tasks/dependencies/yarn' );
+const dependenciesComposer = require( '../../../tasks/dependencies/composer' );
+const dependenciesGithub = require( '../../../tasks/dependencies/github' );
+const dependenciesNaturalDocs = require( '../../../tasks/dependencies/naturalDocs' );
+const dependenciesWpUnit = require( '../../../tasks/dependencies/wpUnit' );
+const dependenciesYarn = require( '../../../tasks/dependencies/yarn' );
 
 const documentation = require( '../../../series/documentation' );
 const lint = require( '../../../series/lint' );
@@ -82,9 +82,8 @@ const defaultSeries = () => {
 
   if ( TRAVIS ) {
     tasks = series(
-      dependencies,
+      dependenciesSeries(),
       lint,
-      compile,
       version,
       documentation,
       test,
@@ -92,9 +91,8 @@ const defaultSeries = () => {
     );
   } else {
     tasks = series(
-      dependencies,
+      dependenciesSeries(),
       lint,
-      compile,
       version,
       documentation,
       test

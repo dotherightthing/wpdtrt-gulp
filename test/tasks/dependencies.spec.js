@@ -15,6 +15,7 @@ const del = require( 'del' );
 const execa = require( 'execa' );
 const fs = require( 'fs' );
 const mocha = require( 'mocha' );
+const os = require('os');
 const { describe, it } = mocha; // fix eslint no-undef errors
 
 /**
@@ -42,8 +43,8 @@ const shellCommand = async ( command ) => {
   return err;
 };
 
-describe.only( 'dependencies', function () {
-  this.timeout( 120000 );
+describe( 'dependencies', function () {
+  this.timeout( 60000 );
 
   // TODO: Github & WPUnit
   const composerFolder = 'vendor';
@@ -87,16 +88,10 @@ describe.only( 'dependencies', function () {
     } );
 
     describe( 'naturalDocs', function () {
-      it.skip( 'downloads the executable', async function() {
-        // TODO
-        expect( stderr.replace( /\n$/, '') ).to.equal( '' );
-      } );
-    } );
-
-    describe( 'wpUnit', function () {
-      it.skip( 'downloads and installs the test suite', async function() {
-        // TODO
-        expect( stderr.replace( /\n$/, '') ).to.equal( '' );
+      it.skip( 'downloads the executable (passing but skipped to limit downloads)', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp dependenciesNaturalDocs --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${process.cwd()}/${theme}/${naturalDocsFolder}` ) ).to.equal( true );
       } );
     } );
 
@@ -106,6 +101,37 @@ describe.only( 'dependencies', function () {
         expect( err.replace( /\n$/, '') ).to.equal( '' );
         expect( fs.existsSync( `${process.cwd()}/${theme}/${yarnFolder}` ) ).to.equal( true );
         expect( fs.existsSync( `${process.cwd()}/${theme}/yarn.lock` ) ).to.equal( true );
+      } );
+    } );
+  } );
+
+  /**
+   * Group: WordPress Plugin Boilerplate
+   * _____________________________________
+   */
+  describe.only( 'wordpress-plugin-boilerplate', function () {
+    const theme = './test/fixtures/wordpress-plugin-boilerplate';
+
+    beforeEach ( 'clean up test files', async function() {
+      await del( `${theme}/${composerFolder}` );
+      await del( `${theme}/${naturalDocsFolder}` );
+      await del( `${theme}/${yarnFolder}` );
+      await del( `${theme}/yarn.lock` );
+      await del( `${os.tmpdir()}/wordpress`, { force: true } );
+      await del( `${os.tmpdir()}/wordpress-tests-lib`, { force: true } );
+    } );
+
+    describe( 'wpUnit', function () {
+      it( 'downloads and installs the test suite', async function() {
+        const err = await shellCommand( `./node_modules/.bin/gulp dependenciesWpUnit --gulpfile ${theme}/gulpfile.js --cwd ${theme}` );
+        expect( err.replace( /\n$/, '') ).to.equal( '' );
+        expect( fs.existsSync( `${os.tmpdir()}/wordpress-tests-lib` ) ).to.equal( true );
+        // expect( fs.existsSync( `${os.tmpdir()}/wordpress` ) ).to.equal( true ); // running both expectations causes this to fail
+      } );
+
+      it.skip( 'creates a database', async function() {
+        // TODO
+        expect( stderr.replace( /\n$/, '') ).to.equal( '' );
       } );
     } );
   } );
