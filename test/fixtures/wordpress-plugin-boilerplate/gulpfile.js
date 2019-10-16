@@ -47,16 +47,12 @@ const { series } = gulp;
  * - Integrated path: ./node_modules/wpdtrt-gulp/
  */
 const env = require( '../../../helpers/env' );
-const compile = require( '../../../series/compile' );
-const compileCss = require( '../../../tasks/compile/css' );
-const compileJs = require( '../../../tasks/compile/js' );
 const dependencies = require( '../../../series/dependencies' );
 const documentation = require( '../../../series/documentation' );
 const lint = require( '../../../series/lint' );
 const release = require( '../../../series/release' );
 const test = require( '../../../series/test' );
 const version = require( '../../../series/version' );
-const watch = require( '../../../series/watch' );
 
 const {
   TRAVIS
@@ -114,6 +110,5 @@ module.exports = {
   lint,
   release,
   test,
-  version,
-  watch
+  version
 };

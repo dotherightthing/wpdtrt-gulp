@@ -37,7 +37,7 @@ require( 'regenerator-runtime/runtime' );
  * Import gulp methods
  */
 const gulp = require( 'gulp' );
-const { series } = gulp;
+const { parallel, series } = gulp;
 
 /**
  * Import task modules from wpdtrt-gulp.
@@ -47,7 +47,6 @@ const { series } = gulp;
  * - Integrated path: ./node_modules/wpdtrt-gulp/
  */
 const env = require( '../../../helpers/env' );
-const compile = require( '../../../series/compile' );
 const compileCss = require( '../../../tasks/compile/css' );
 const compileCssWpdtrtDynamicImport = require( '../../../tasks/compile/css-wpdtrt-dynamic-import' );
 const compileJs = require( '../../../tasks/compile/js' );
@@ -57,16 +56,31 @@ const lint = require( '../../../series/lint' );
 const release = require( '../../../series/release' );
 const test = require( '../../../series/test' );
 const version = require( '../../../series/version' );
-const watch = require( '../../../series/watch' );
 
 const {
   TRAVIS
 } = env;
 
+const watched = {
+  // note: paths are relative to gulpfile
+  js: './js/*.js',
+  scss: './scss/*.scss'
+};
+
 /**
  * Group: Compose the appropriate tasks for the environment.
  * _____________________________________
  */
+
+const compile = series(
+  compileCssWpdtrtDynamicImport,
+  parallel( compileCss, compileJs )
+);
+
+const watch = () => {
+  watch( watched.scss, series( compileCss ) );
+  watch( watched.js, series( compileJs ) );
+}
 
 /**
  * Function: getDefault
@@ -101,7 +115,6 @@ const getDefaultTask = () => {
   return defaultTask;
 };
 
-
 /**
  * Fix #1 for: "Task never defined: lint"
  *
@@ -113,8 +126,9 @@ const getDefaultTask = () => {
 module.exports = {
   default: getDefaultTask(),
   compile,
-  compileCss,
-  compileJs,
+  compileCssWpdtrtDynamicImport, // for testing
+  compileCss, // for testing
+  compileJs, // for testing
   dependencies,
   documentation,
   lint,

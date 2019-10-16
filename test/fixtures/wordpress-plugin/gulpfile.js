@@ -37,7 +37,7 @@ require( 'regenerator-runtime/runtime' );
  * Import gulp methods
  */
 const gulp = require( 'gulp' );
-const { series } = gulp;
+const { parallel, series } = gulp;
 
 /**
  * Import task modules from wpdtrt-gulp.
@@ -47,7 +47,6 @@ const { series } = gulp;
  * - Integrated path: ./node_modules/wpdtrt-gulp/
  */
 const env = require( '../../../helpers/env' );
-const compile = require( '../../../series/compile' );
 const compileCss = require( '../../../tasks/compile/css' );
 const compileJs = require( '../../../tasks/compile/js' );
 const dependencies = require( '../../../series/dependencies' );
@@ -56,16 +55,28 @@ const lint = require( '../../../series/lint' );
 const release = require( '../../../series/release' );
 const test = require( '../../../series/test' );
 const version = require( '../../../series/version' );
-const watch = require( '../../../series/watch' );
 
 const {
   TRAVIS
 } = env;
 
+const watched = {
+  // note: paths are relative to gulpfile
+  js: './js/*.js',
+  scss: './scss/*.scss'
+};
+
 /**
  * Group: Compose the appropriate tasks for the environment.
  * _____________________________________
  */
+
+const compile = parallel( compileCss, compileJs );
+
+const watch = () => {
+  watch( watched.scss, series( compileCss ) );
+  watch( watched.js, series( compileJs ) );
+}
 
 /**
  * Function: getDefault
@@ -80,7 +91,7 @@ const getDefaultTask = () => {
     defaultTask = series(
       dependencies,
       lint,
-      compile,
+      parallel( compileCss, compileJs ),
       version,
       documentation,
       test,
@@ -90,7 +101,7 @@ const getDefaultTask = () => {
     defaultTask = series(
       dependencies,
       lint,
-      compile,
+      parallel( compileCss, compileJs ),
       version,
       documentation,
       test
@@ -112,8 +123,8 @@ const getDefaultTask = () => {
 module.exports = {
   default: getDefaultTask(),
   compile,
-  compileCss,
-  compileJs,
+  compileCss, // for testing
+  compileJs, // for testing
   dependencies,
   documentation,
   lint,
